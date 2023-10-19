@@ -1,0 +1,11 @@
+const express = require('express');
+
+const router = express.Router();
+
+const piecesController = require('../controllers/pieces');
+
+router.get('/', piecesController.getPieces, (req, res, next) => {
+  res.status(201).json(res.locals.pieces);
+});
+
+module.exports = router;
