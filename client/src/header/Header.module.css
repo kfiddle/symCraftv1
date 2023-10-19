@@ -58,7 +58,7 @@ h1 {
   /* font-size: 14px; */
 }
 
-.nav a,
+/* .nav a,
 .navItem {
   text-decoration: none;
   color: #122238;
@@ -66,16 +66,38 @@ h1 {
   font-size: 1.3rem;
   letter-spacing: 0.05em;
   cursor: pointer;
-}
+} */
 
-.nav a:hover {
-  color: #042dfc;
+.navItem:hover {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 1rem;
 }
 
-.nav a:active,
-.nav a.active {
+.inActive {
+  text-decoration: none;
+  color: #122238;
+  transition: 0.3s;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+.active {
+  text-decoration: none;
   color: #042dfc;
+  transition: 0.3s;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+/* .nav a:hover, .active {
+  color: #042dfc;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 1rem;
+} */
+
+.active {
 }

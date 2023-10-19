@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styles from './Header.module.css';
 // import Stripes from "./warrantOfficerStripes/Stripes";
 
-const MainNavigation = ({ stripesHandler, setSideBarOpen }) => {
+const Header = ({ stripesHandler, setSideBarOpen }) => {
   // const stripesHandler = () => stripesHandler();
   // const closeSideBar = () => setSideBarOpen(false);
 
@@ -18,9 +18,20 @@ const MainNavigation = ({ stripesHandler, setSideBarOpen }) => {
         <ul>
           <li className={styles.navItem}>
             <NavLink
-              // to={'/log'}
+              to={'/dashboard'}
+              className={({ isActive }) => (isActive ? styles.active : styles.inActive)}
               // onClick={closeSideBar}
-              activeClassName={styles.active}
+              // activeClassName={styles.active}
+            >
+              {' '}
+              Dashboard
+            </NavLink>
+          </li>
+          <li className={styles.navItem}>
+            <NavLink
+              to={'/notices'}
+              // onClick={closeSideBar}
+              className={({ isActive }) => (isActive ? styles.active : styles.inActive)}
             >
               NOTICES
             </NavLink>
@@ -28,20 +39,9 @@ const MainNavigation = ({ stripesHandler, setSideBarOpen }) => {
 
           <li className={styles.navItem}>
             <NavLink
-              to={'/dashboard'}
-              // onClick={closeSideBar}
-              activeClassName={styles.active}
-            >
-              {' '}
-              Dashboard
-            </NavLink>
-          </li>
-
-          <li className={styles.navItem}>
-            <NavLink
               to={'library'}
               // onClick={closeSideBar}
-              activeClassName={styles.active}
+              className={({ isActive }) => (isActive ? styles.active : styles.inActive)}
             >
               Library
             </NavLink>
@@ -49,9 +49,9 @@ const MainNavigation = ({ stripesHandler, setSideBarOpen }) => {
 
           <li className={styles.navItem}>
             <NavLink
-              // to={'/sub-players'}
+              to={'/subs'}
               // onClick={closeSideBar}
-              activeClassName={styles.active}
+              className={({ isActive }) => (isActive ? styles.active : styles.inActive)}
             >
               Subs
             </NavLink>
@@ -62,4 +62,4 @@ const MainNavigation = ({ stripesHandler, setSideBarOpen }) => {
   );
 };
 
-export default MainNavigation;
+export default Header;
