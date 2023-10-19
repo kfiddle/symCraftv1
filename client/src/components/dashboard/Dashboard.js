@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import styles from './Dashboard.module.css';
+import LibraryUploader from '../library/LibraryUploader';
 
 const Dashboard = () => {
   useEffect(() => {
@@ -15,7 +16,11 @@ const Dashboard = () => {
     grabPieces();
   });
 
-  return <div className={styles.outerContainer}>Hey Dash</div>;
+  return <div className={styles.outerContainer}>
+
+
+    <LibraryUploader />
+  </div>;
 };
 
 export default Dashboard;
