@@ -1,0 +1,14 @@
+.outerContainer {
+  margin-top: 8rem;
+  height: calc(100vh - 8rem);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.leftBox {
+  border: 1px solid black;
+}
+
+.rightBox {
+  border: 1px solid black;
+}

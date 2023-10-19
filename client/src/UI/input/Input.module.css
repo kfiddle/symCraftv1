@@ -1,0 +1,17 @@
+.input {
+  font: inherit;
+  padding: 1rem;
+  border-radius: 3px;
+  background-color: #e7e1e1;
+  border: 1px solid #d2dada;
+  display: block;
+  width: 100%;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.input:focus {
+  background-color: #d6d8f1;
+  outline: none;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
