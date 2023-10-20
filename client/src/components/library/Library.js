@@ -37,7 +37,14 @@ const Library = () => {
   let displayablePieces =
     library.length > 0
       ? library.map((piece) => (
-          <Piece key={piece.id} id={piece.id} composerLast={piece.composerLast} title={piece.title} clicker={clickedPieceHandler} />
+          <Piece
+            key={piece.id}
+            id={piece.id}
+            composerLast={piece.composerLast}
+            title={piece.title}
+            clicker={clickedPieceHandler}
+            isClicked={piece.id === clickedPiece.id}
+          />
         ))
       : '';
 
@@ -49,9 +56,7 @@ const Library = () => {
         </div>
         <div className={styles.piecesBox}>{displayablePieces}</div>
       </div>
-      <div className={styles.rightBox}>
-        {clickedPiece && <PieceDetails piece={clickedPiece}/>}
-      </div>
+      <div className={styles.rightBox}>{clickedPiece && <PieceDetails piece={clickedPiece} />}</div>
     </div>
   );
 };

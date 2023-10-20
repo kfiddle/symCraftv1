@@ -85,7 +85,7 @@ h1 {
 
 .active {
   text-decoration: none;
-  color: #042dfc;
+  color: rgb(45, 21, 231);;
   transition: 0.3s;
   font-size: 1.5rem;
   letter-spacing: 0.05em;
