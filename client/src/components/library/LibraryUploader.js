@@ -92,14 +92,44 @@ const LibraryUploader = () => {
     //     }, 30);
     //   });
     // }
-    await sendChunk(library.slice(223, 233))
+
+    let testSlice = library.slice(275, 290);
+    for (let row of testSlice) {
+      await new Promise(resolve => {
+        setTimeout(async () => {
+          await sendChunk([row]);
+          resolve();
+        }, 500)
+      })
+    }
+    // await sendChunk(library.slice(266, 272))
+  };
+
+  const sendLibrary2 = async () => {
+    const chunkSize = 5;
+    const numChunks = Math.ceil(library.length / chunkSize);
+    let chunk = 0;
+  
+    const sendChunkWithInterval = async () => {
+      if (chunk < numChunks) {
+        const startIndex = chunk * chunkSize;
+        const endIndex = Math.min(startIndex + chunkSize, library.length);
+        const data = library.slice(startIndex, endIndex);
+        await sendChunk(data);
+        chunk++;
+      } else {
+        clearInterval(intervalId); // Stop the interval when all data is sent
+      }
+    };
+  
+    const intervalId = setInterval(sendChunkWithInterval, 500); // Adjust the delay (in milliseconds) as needed
   };
 
   return (
     <div>
       <label>Library Excel File</label>
       <input type="file" onChange={(event) => fileHandler(event)} style={{ padding: '10px' }} />
-      <button onClick={sendLibrary}>SUBMIT</button>
+      <button onClick={sendLibrary2}>SUBMIT</button>
     </div>
   );
 };

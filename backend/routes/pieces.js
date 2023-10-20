@@ -4,6 +4,10 @@ const router = express.Router();
 
 const piecesController = require('../controllers/pieces');
 
+router.get('/:pid', piecesController.getPieceById, (req, res, next) => {
+  res.status(201).json(res.locals.piece);
+});
+
 router.get('/', piecesController.getPieces, (req, res, next) => {
   res.status(201).json(res.locals.pieces);
 });

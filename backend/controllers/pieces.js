@@ -18,6 +18,23 @@ piecesController.getPieces = async (req, res, next) => {
   }
 };
 
+piecesController.getPieceById = async (req, res, next) => {
+  try {
+    const pieceId = req.params.pid;
+
+    const queryString = `SELECT * FROM Piece WHERE id=${pieceId};`;
+    const reply = await db.query(queryString);
+    res.locals.piece = reply.rows[0];
+    return next();
+  } catch (err) {
+    return next({
+      log: 'error retrieving piece details from piecesController.getPieceById',
+      status: 500,
+      message: { err: 'Unable to list piece details' },
+    });
+  }
+};
+
 piecesController.addPieces = async (req, res, next) => {
   const newPieces = req.body.pieces;
   console.log(newPieces);
