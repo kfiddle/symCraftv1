@@ -8,4 +8,9 @@ router.get('/', piecesController.getPieces, (req, res, next) => {
   res.status(201).json(res.locals.pieces);
 });
 
+router.post('/', piecesController.addPieces, (req, res, next) => {
+  res.status(201).json({ message: 'success'});
+});
+
+
 module.exports = router;

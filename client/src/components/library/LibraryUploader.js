@@ -43,12 +43,7 @@ const LibraryUploader = () => {
             updated: new Date(row[16]),
           };
 
-          const sendItUp = async (pieceToSend) => {
-            // let response = await PushBasic(pieceToSend, "add-piece");
-            allRows.push(newPiece);
-          };
-
-          sendItUp(newPiece);
+          allRows.push(newPiece);
         }
         setLibrary([...allRows]);
       }
@@ -61,11 +56,39 @@ const LibraryUploader = () => {
   //   console.log(original);
   // };
 
+  const sendChunk = async (data) => {
+    try {
+      const response = await fetch('http://localhost:3000/pieces', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ pieces: data }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Data sent successfully:', result);
+      } else {
+        console.error('Failed to send data to the backend:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('An error occurred while sending data to the backend:', error);
+    }
+  };
+
+  const sendLibrary = async () => {
+    const numChunks = Math.ceil(library.length / 100);
+    for (let chunk = 0; chunk < numChunks; chunk++) {
+      await sendChunk(chunk);
+    }
+  };
+
   return (
     <div>
       <label>Library Excel File</label>
       <input type="file" onChange={(event) => fileHandler(event)} style={{ padding: '10px' }} />
-      <button onClick={() => console.log(library)}>Test Lib</button>
+      <button onClick={sendLibrary}>SUBMIT</button>
     </div>
   );
 };
