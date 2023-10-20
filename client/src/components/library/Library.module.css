@@ -12,3 +12,12 @@
 .rightBox {
   border: 1px solid black;
 }
+
+.piecesBox {
+  position: fixed;
+  overflow: auto;
+}
+
+.piecesBox::-webkit-scrollbar {
+  display: none;
+}

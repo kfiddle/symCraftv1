@@ -35,7 +35,7 @@ const LibraryUploader = () => {
             publisher: row[8],
             duration: row[9],
             instrumentation: row[10],
-            vocalistSoloist: row[11],
+            vocalist_soloists: row[11],
             percBreakdown: row[12],
             notes: row[13],
             status: row[14],
@@ -78,21 +78,21 @@ const LibraryUploader = () => {
   };
 
   const sendLibrary = async () => {
-    const testPiece = { composer: 'joe', name: 'blow', age: 12, hair: null };
-    console.log(Object.entries(testPiece));
-
-    await sendChunk(library[40])
-    // const chunkSize = 30;
-    // const numChunks = Math.ceil(library.length / chunkSize);
+    const chunkSize = 30;
+    const numChunks = Math.ceil(library.length / chunkSize);
 
     // for (let chunk = 0; chunk < numChunks; chunk++) {
     //   const startIndex = chunk * chunkSize;
     //   const endIndex = Math.min(startIndex + chunkSize, library.length);
     //   const data = library.slice(startIndex, endIndex);
-
-    //   await sendChunk(data);
-    //   // console.log(data)
+    //   await new Promise((resolve) => {
+    //     setTimeout(async () => {
+    //       await sendChunk(data);
+    //       resolve();
+    //     }, 30);
+    //   });
     // }
+    await sendChunk(library.slice(223, 233))
   };
 
   return (

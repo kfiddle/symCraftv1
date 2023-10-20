@@ -19,8 +19,8 @@ piecesController.getPieces = async (req, res, next) => {
 };
 
 piecesController.addPieces = async (req, res, next) => {
-  // const newPieces = req.body.pieces;
-  let newPieces = [{ composerLast: 'Szigeti', title: 'Zikiller'}];
+  const newPieces = req.body.pieces;
+  console.log(newPieces);
 
   try {
     for (let piece of newPieces) {
@@ -29,27 +29,25 @@ piecesController.addPieces = async (req, res, next) => {
       let valString = ` VALUES (`;
 
       let index = 1;
-      let keyVals = Object.entries(piece);
+      let keyVals = Object.entries(piece).filter((keyVal) => keyVal[1]);
       for (let j = 0; j < keyVals.length; j++) {
         let key = keyVals[j][0];
         let val = keyVals[j][1];
 
-        if (val) {
-          vals.push(val);
+        vals.push(val);
 
-          if (j === keyVals.length - 1) {
-            insertString += key + ')';
-            valString += ')';
-            insertString += insertString + valString;
-          } else {
-            insertString += key + ', ';
-            valString += '$' + index + ', ';
-            index++;
-          }
+        if (j === keyVals.length - 1) {
+          insertString += key + ')';
+          valString += '$' + index + ')';
+          insertString += valString;
+        } else {
+          insertString += key + ', ';
+          valString += '$' + index + ', ';
+          index++;
         }
       }
 
-      console.log(insertString)
+      console.log(insertString);
       await db.query(insertString, vals);
     }
   } catch (err) {
