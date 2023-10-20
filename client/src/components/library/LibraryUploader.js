@@ -78,17 +78,21 @@ const LibraryUploader = () => {
   };
 
   const sendLibrary = async () => {
-    const chunkSize = 30;
-    const numChunks = Math.ceil(library.length / chunkSize);
-  
-    for (let chunk = 0; chunk < numChunks; chunk++) {
-      const startIndex = chunk * chunkSize;
-      const endIndex = Math.min(startIndex + chunkSize, library.length);
-      const data = library.slice(startIndex, endIndex);
-      
-      await sendChunk(data); 
-      // console.log(data)
-    }
+    const testPiece = { composer: 'joe', name: 'blow', age: 12, hair: null };
+    console.log(Object.entries(testPiece));
+
+    await sendChunk(library[40])
+    // const chunkSize = 30;
+    // const numChunks = Math.ceil(library.length / chunkSize);
+
+    // for (let chunk = 0; chunk < numChunks; chunk++) {
+    //   const startIndex = chunk * chunkSize;
+    //   const endIndex = Math.min(startIndex + chunkSize, library.length);
+    //   const data = library.slice(startIndex, endIndex);
+
+    //   await sendChunk(data);
+    //   // console.log(data)
+    // }
   };
 
   return (

@@ -18,32 +18,42 @@ piecesController.getPieces = async (req, res, next) => {
   }
 };
 
-
-try {
-  // Create a prepared statement for inserting new records
-
-  for (const piece of newPieces) {
-    const { value1, value2, value3 } = piece; // Extract values from the request body
-
-    // Execute the insert statement with the provided values
-    await db.query(insertQuery, [value1, value2, value3]); // Pass values as an array
-  }
-
 piecesController.addPieces = async (req, res, next) => {
+  // const newPieces = req.body.pieces;
+  let newPieces = [{ composerLast: 'Szigeti', title: 'Zikiller'}];
+
   try {
-    const newPieces = req.body.pieces;
-    const insertQuery = 'INSERT INTO Piece (column1, column2, column3) VALUES ($1, $2, $3)'; // Modify for your table's columns
+    for (let piece of newPieces) {
+      const vals = [];
+      let insertString = `INSERT INTO Piece (`;
+      let valString = ` VALUES (`;
 
+      let index = 1;
+      let keyVals = Object.entries(piece);
+      for (let j = 0; j < keyVals.length; j++) {
+        let key = keyVals[j][0];
+        let val = keyVals[j][1];
 
-    // const reply = await db.query(queryString);
-    res.locals.pieces = pieces.length;
-    return next();
+        if (val) {
+          vals.push(val);
+
+          if (j === keyVals.length - 1) {
+            insertString += key + ')';
+            valString += ')';
+            insertString += insertString + valString;
+          } else {
+            insertString += key + ', ';
+            valString += '$' + index + ', ';
+            index++;
+          }
+        }
+      }
+
+      console.log(insertString)
+      await db.query(insertString, vals);
+    }
   } catch (err) {
-    return next({
-      log: 'error adding pieces in piecesController.addPieces',
-      status: 500,
-      message: { err: 'Unable to add pieces' },
-    });
+    console.log(err);
   }
 };
 
