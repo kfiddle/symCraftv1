@@ -43,7 +43,7 @@ const LibraryUploader = () => {
             updated: new Date(row[16]),
           };
 
-          allRows.push(newPiece);
+          if (newPiece.composerLast && newPiece.title) allRows.push(newPiece);
         }
         setLibrary([...allRows]);
       }
@@ -78,9 +78,16 @@ const LibraryUploader = () => {
   };
 
   const sendLibrary = async () => {
-    const numChunks = Math.ceil(library.length / 100);
+    const chunkSize = 30;
+    const numChunks = Math.ceil(library.length / chunkSize);
+  
     for (let chunk = 0; chunk < numChunks; chunk++) {
-      await sendChunk(chunk);
+      const startIndex = chunk * chunkSize;
+      const endIndex = Math.min(startIndex + chunkSize, library.length);
+      const data = library.slice(startIndex, endIndex);
+      
+      await sendChunk(data); 
+      // console.log(data)
     }
   };
 

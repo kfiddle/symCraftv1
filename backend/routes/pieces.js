@@ -9,7 +9,7 @@ router.get('/', piecesController.getPieces, (req, res, next) => {
 });
 
 router.post('/', piecesController.addPieces, (req, res, next) => {
-  res.status(201).json({ message: 'success'});
+  res.status(201).json(res.locals.pieces);
 });
 
 
