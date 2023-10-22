@@ -12,10 +12,14 @@ const Library = () => {
 
   useEffect(() => {
     const grabPieces = async () => {
-      const response = await fetch('http://localhost:3000/pieces');
-      if (response.ok) {
-        let jsonified = await response.json();
-        setLibrary(jsonified);
+      try {
+        const response = await fetch('http://localhost:3000/pieces');
+        if (response.ok) {
+          let jsonified = await response.json();
+          setLibrary(jsonified);
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
 

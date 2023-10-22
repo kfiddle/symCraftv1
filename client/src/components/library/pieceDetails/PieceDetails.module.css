@@ -1,5 +1,6 @@
 .titleDiv {
-  font-size: 2.3rem;
+  font-size: 1.7rem;
+  font-weight: 600;
 }
 
 .composerDiv {
@@ -11,4 +12,8 @@
 
 .prefixDiv {
   margin-top: 2rem;
+}
+
+.instrumentationDiv {
+  margin: 1rem 0 3rem 0;
 }

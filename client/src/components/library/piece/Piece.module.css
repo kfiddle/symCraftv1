@@ -3,11 +3,14 @@
   cursor: pointer;
 }
 
+.outerContainer:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 .clickedOuterContainer {
   padding: 0.5rem;
   cursor: pointer;
-  background: rgb(202, 224, 232);
-  /* text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 1rem; */
+  background: rgb(229, 237, 240);
 }

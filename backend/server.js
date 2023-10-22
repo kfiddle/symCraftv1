@@ -2,18 +2,15 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
+const instRoutes = require('./routes/inst-routes');
 const piecesRoutes = require('./routes/pieces');
+
+app.use("/insts", instRoutes);
 
 app.use(bodyParser.json());
 app.use(cors());
-
-// app.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Origin', '*');
-//   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-//   next();
-// });
 
 app.use('/pieces', piecesRoutes);
 
@@ -38,5 +35,15 @@ app.use((err, req, res, next) => {
 });
 
 const port = process.env.PORT || 3000;
-app.listen(3000, () => console.log(`listening gooooood on port:${port}`));
-app.timeout = 60000; 
+// app.listen(3000, () => console.log(`listening gooooood on port:${port}`));
+
+mongoose
+  .connect(
+    "mongodb+srv://kenjon:kenjonsmythe@cluster0.d2aep6g.mongodb.net/symcraft?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => {
+    app.listen(3000);
+    console.log("connected");
+  })
+  .catch((err) => console.log(err));
