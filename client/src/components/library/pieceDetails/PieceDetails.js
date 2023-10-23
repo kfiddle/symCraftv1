@@ -24,7 +24,7 @@ const PieceDetails = ({ piece }) => {
 
   const displayName = composerfirst ? `${composerlast}, ${composerfirst}` : composerlast;
   return (
-    <Fragment className={styles.outerFrag}>
+    <Fragment>
       <div className={styles.titleDiv}>{title}</div>
       <div>{othername}</div>
       <div className={styles.composerDiv}>
