@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const instRoutes = require('./routes/inst-routes');
 const piecesRoutes = require('./routes/piece-routes');
@@ -34,7 +35,7 @@ const port = process.env.PORT || 3000;
 
 mongoose
   .connect(
-    "mongodb+srv://kenjon:kenjonsmythe@cluster0.d2aep6g.mongodb.net/symcraft?retryWrites=true&w=majority",
+    process.env.mongoUrl,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {
