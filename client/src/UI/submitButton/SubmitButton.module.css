@@ -1,0 +1,39 @@
+.button {
+  width: fit-content;
+  background: none;
+  color: #3B50BE;
+  border: 3px solid #3B50BE;
+  padding: 8px 30px;
+  border-radius: 20px;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease-out;
+}
+
+.buttonDiv {
+  display: flex;
+  justify-content: space-around;
+  width: 60%;
+  margin: 0 auto;
+  font-weight: 900;
+}
+
+.button:hover {
+  background: #3B50BE;
+  color: white;
+}
+
+.deleteButton {
+  width: fit-content;
+  background: rgb(161, 21, 21);
+  border-radius: 5px;
+  box-shadow: 2px 2px black;
+  color: whitesmoke;
+}
+
+.deleteButton:hover {
+  color: chartreuse;
+  background: red;
+}

@@ -1,0 +1,68 @@
+.outerHamburger {
+  left: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 2rem;
+}
+
+.bar1 {
+  display: block;
+  position: relative;
+  width: 4rem;
+  height: 5px;
+  background: #1c1b1c;
+  transition: cubic-bezier(0.3, 0, 0.5, 1) 0.15s;
+}
+
+.bar2 {
+  display: block;
+  position: relative;
+  top: 4px;
+  width: 4rem;
+  height: 5px;
+  background: #1c1b1c;
+  transition: cubic-bezier(0.3, 0, 0.5, 1) 0.25s;
+}
+
+.bar3 {
+  display: block;
+  position: relative;
+  top: 8px;
+  width: 4rem;
+  height: 5px;
+  background: #1c1b1c;
+  transition: cubic-bezier(0.3, 0, 0.5, 1) 0.35s;
+}
+
+.hover1 {
+  background: chartreuse;
+  opacity: 0.5;
+  transform: translateY(-6px);
+}
+
+.hover2 {
+  background: rgb(138, 245, 30);
+  opacity: 0.5;
+  transform: translateY(-3px);
+}
+
+.hover3 {
+  background: rgb(200, 236, 37);
+  opacity: 0.5;
+  transform: translateY(1px);
+}
+
+.clickedBar1 {
+  transform: rotate(45deg) translateY(7px);
+}
+
+.clickedBar2 {
+  display: none;
+}
+
+.clickedBar3 {
+  transform: rotate(-45deg) translateY(-9px);
+}

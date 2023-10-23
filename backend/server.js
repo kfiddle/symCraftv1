@@ -5,13 +5,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const instRoutes = require('./routes/inst-routes');
-const piecesRoutes = require('./routes/pieces');
+const piecesRoutes = require('./routes/piece-routes');
 
-app.use("/insts", instRoutes);
 
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use("/insts", instRoutes);
 app.use('/pieces', piecesRoutes);
 
 app.use('*', (req, res, next) => {
@@ -22,20 +22,15 @@ app.use('*', (req, res, next) => {
   });
 });
 
-app.use((err, req, res, next) => {
-  const defaultErr = {
-    log: 'Express error handler caught unknown middleware error',
-    status: 400,
-    message: { err: 'An error occurred' },
-  };
-  const errorObj = Object.assign({}, defaultErr, err);
-  console.log(errorObj.log);
-
-  return res.status(errorObj.status).json({ message: errorObj.message });
+app.use((error, req, res, next) => {
+  if (res.headerSent) {
+    return next(error);
+  }
+  res.status(error.code || 500);
+  res.json({ message: error.message || "something really went wrong" });
 });
 
 const port = process.env.PORT || 3000;
-// app.listen(3000, () => console.log(`listening gooooood on port:${port}`));
 
 mongoose
   .connect(

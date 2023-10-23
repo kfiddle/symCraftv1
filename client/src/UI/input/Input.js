@@ -1,11 +1,11 @@
 import styles from './Input.module.css';
 
-const Input = ({ placeholder }) => {
+const Input = ({ placeholder, onChangeHandler }) => {
   return (
     <input
       className={styles.input}
       type="text"
-      // onChange={(event) => populator(event, key)}
+      onChange={onChangeHandler}
       placeholder={placeholder}
     ></input>
   );

@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 
 import styles from './Header.module.css';
+import HamburgerMenu from './hamburger/HamburgerMenu';
 // import Stripes from "./warrantOfficerStripes/Stripes";
 
 const Header = ({ stripesHandler, setSideBarOpen }) => {
@@ -10,8 +11,8 @@ const Header = ({ stripesHandler, setSideBarOpen }) => {
   return (
     <header className={styles.header}>
       <div className={styles.logoDiv}>
-        {/* <Stripes stripesHandler={stripesHandler} sideBarOpen={props.sideBarOpen} /> */}
-
+        {/* <HamburgerMenu stripesHandler={stripesHandler} sideBarOpen={props.sideBarOpen} /> */}
+        <HamburgerMenu  />
         <h1>SymCraft</h1>
       </div>
       <nav className={styles.nav}>
