@@ -21,7 +21,7 @@ const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
 
   const clicker = () => {
     // stripesHandler();
-    console.log('Hamburger clicked');
+    console.log('Hamburger clicked!');
   };
 
   return (
