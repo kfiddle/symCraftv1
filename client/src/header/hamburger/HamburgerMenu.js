@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 import styles from './HamburgerMenu.module.css';
 
@@ -20,7 +20,8 @@ const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
   };
 
   const clicker = () => {
-    stripesHandler();
+    // stripesHandler();
+    console.log('Hamburger clicked');
   };
 
   return (
