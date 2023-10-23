@@ -3,7 +3,7 @@ const pieceController = require("../controllers/piece-controller");
 
 const router = express.Router();
 
-// router.get('/', pieceController.getAllPieces)
+router.get('/', pieceController.getAllPieces)
 
 router.post('/array', pieceController.createPieces);
 

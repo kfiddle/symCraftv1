@@ -56,14 +56,16 @@ const LibraryUploader = () => {
   //   console.log(original);
   // };
 
-  const sendChunks = async (data) => {
+  const sendChunks = async () => {
+    const testPieces = library.slice(1000);
+
     try {
-      const response = await fetch('http://localhost:3000/piecesarray', {
+      const response = await fetch('http://localhost:3000/pieces/array', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ pieces: library }),
+        body: JSON.stringify({ pieces: testPieces }),
       });
 
       if (response.ok) {
@@ -77,15 +79,11 @@ const LibraryUploader = () => {
     }
   };
 
-
-
-  
-
   // const sendLibrary2 = async () => {
   //   const chunkSize = 5;
   //   const numChunks = Math.ceil(library.length / chunkSize);
   //   let chunk = 0;
-  
+
   //   const sendChunkWithInterval = async () => {
   //     if (chunk < numChunks) {
   //       const startIndex = chunk * chunkSize;
@@ -97,9 +95,19 @@ const LibraryUploader = () => {
   //       clearInterval(intervalId); // Stop the interval when all data is sent
   //     }
   //   };
-  
+
   //   const intervalId = setInterval(sendChunkWithInterval, 500); // Adjust the delay (in milliseconds) as needed
   // };
+
+  const showLib = () => console.log(library);
+  const showList = () => {
+    const wholeThing = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    const firstChunk = wholeThing.slice(1, 10);
+    const second = wholeThing.slice(10, 20);
+
+    console.log(firstChunk, 'first');
+    console.log(second, 'second')
+  };
 
   return (
     <div>

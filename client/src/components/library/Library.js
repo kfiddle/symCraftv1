@@ -16,6 +16,7 @@ const Library = () => {
         const response = await fetch('http://localhost:3000/pieces');
         if (response.ok) {
           let jsonified = await response.json();
+          console.log(jsonified)
           setLibrary(jsonified);
         }
       } catch (err) {
