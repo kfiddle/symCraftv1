@@ -20,9 +20,10 @@ const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
   };
 
   const clicker = () => {
-    stripesHandler();
+    // stripesHandler();
+    console.log('clicked')
   };
-
+ 
   return (
     <div
       className={styles.outerHamburger}
