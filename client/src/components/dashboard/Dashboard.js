@@ -75,6 +75,7 @@ const Dashboard = () => {
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
           <SubmitButton submitFunc={submitPieceTester} />
         </div>
+        <LibraryUploader />
       </div>
     </div>
   );

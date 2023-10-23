@@ -5,7 +5,9 @@ const router = express.Router();
 
 // router.get('/', pieceController.getAllPieces)
 
-router.post('/', pieceController.createPiece)
+router.post('/array', pieceController.createPieces);
+
+router.post('/', pieceController.createPiece);
 
 // router.get("/:pid", pieceController.getPieceById);
 

@@ -56,14 +56,14 @@ const LibraryUploader = () => {
   //   console.log(original);
   // };
 
-  const sendChunk = async (data) => {
+  const sendChunks = async (data) => {
     try {
-      const response = await fetch('http://localhost:3000/pieces', {
+      const response = await fetch('http://localhost:3000/piecesarray', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ pieces: data }),
+        body: JSON.stringify({ pieces: library }),
       });
 
       if (response.ok) {
@@ -77,59 +77,35 @@ const LibraryUploader = () => {
     }
   };
 
-  const sendLibrary = async () => {
-    const chunkSize = 30;
-    const numChunks = Math.ceil(library.length / chunkSize);
 
-    // for (let chunk = 0; chunk < numChunks; chunk++) {
-    //   const startIndex = chunk * chunkSize;
-    //   const endIndex = Math.min(startIndex + chunkSize, library.length);
-    //   const data = library.slice(startIndex, endIndex);
-    //   await new Promise((resolve) => {
-    //     setTimeout(async () => {
-    //       await sendChunk(data);
-    //       resolve();
-    //     }, 30);
-    //   });
-    // }
 
-    let testSlice = library.slice(275, 290);
-    for (let row of testSlice) {
-      await new Promise(resolve => {
-        setTimeout(async () => {
-          await sendChunk([row]);
-          resolve();
-        }, 500)
-      })
-    }
-    // await sendChunk(library.slice(266, 272))
-  };
-
-  const sendLibrary2 = async () => {
-    const chunkSize = 5;
-    const numChunks = Math.ceil(library.length / chunkSize);
-    let chunk = 0;
   
-    const sendChunkWithInterval = async () => {
-      if (chunk < numChunks) {
-        const startIndex = chunk * chunkSize;
-        const endIndex = Math.min(startIndex + chunkSize, library.length);
-        const data = library.slice(startIndex, endIndex);
-        await sendChunk(data);
-        chunk++;
-      } else {
-        clearInterval(intervalId); // Stop the interval when all data is sent
-      }
-    };
+
+  // const sendLibrary2 = async () => {
+  //   const chunkSize = 5;
+  //   const numChunks = Math.ceil(library.length / chunkSize);
+  //   let chunk = 0;
   
-    const intervalId = setInterval(sendChunkWithInterval, 500); // Adjust the delay (in milliseconds) as needed
-  };
+  //   const sendChunkWithInterval = async () => {
+  //     if (chunk < numChunks) {
+  //       const startIndex = chunk * chunkSize;
+  //       const endIndex = Math.min(startIndex + chunkSize, library.length);
+  //       const data = library.slice(startIndex, endIndex);
+  //       await sendChunk(data);
+  //       chunk++;
+  //     } else {
+  //       clearInterval(intervalId); // Stop the interval when all data is sent
+  //     }
+  //   };
+  
+  //   const intervalId = setInterval(sendChunkWithInterval, 500); // Adjust the delay (in milliseconds) as needed
+  // };
 
   return (
     <div>
       <label>Library Excel File</label>
       <input type="file" onChange={(event) => fileHandler(event)} style={{ padding: '10px' }} />
-      <button onClick={sendLibrary2}>SUBMIT</button>
+      <button onClick={sendChunks}>SUBMIT</button>
     </div>
   );
 };

@@ -20,4 +20,22 @@ const createPiece = async (req, res, next) => {
   }
 };
 
-module.exports = { createPiece };
+const createPieces = async (req, res, next) => {
+  const { pieces } = req.body;
+  console.log(pieces)
+
+  try {
+    for (let piece of pieces) {
+      const pieceToCreate = {};
+      for (let key in piece) {
+        pieceToCreate[key] = piece[key];
+      }
+      const createdPiece = new Piece(pieceToCreate);
+      await createdPiece.save();
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { createPiece, createPieces };

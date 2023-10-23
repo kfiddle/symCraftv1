@@ -11,8 +11,9 @@ const piecesRoutes = require('./routes/piece-routes');
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use("/insts", instRoutes);
-app.use('/pieces', piecesRoutes);
+app.use('/piecesarray', (req, res, next) => console.log(req.body) )
+app.use("/insts/", instRoutes);
+// app.use('/pieces/', piecesRoutes);
 
 app.use('*', (req, res, next) => {
   return next({
