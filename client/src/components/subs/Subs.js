@@ -1,30 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import Inst from './inst/Inst';
 import Input from '../../UI/input/Input';
 
+import generalStore from '../../contextStore/general-store';
+
 import styles from './Subs.module.css';
 
 const Subs = () => {
-  const [insts, setInsts] = useState([]);
+  const { dashboard, dispatch } = useContext(generalStore);
 
-  useEffect(() => {
-    const getInsts = async () => {
-      try {
-        const reply = await fetch('http://localhost:3000/insts');
-        if (reply.ok) {
-          const jsonified = await reply.json();
-          console.log(jsonified);
-          setInsts(jsonified);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getInsts();
-  }, []);
-
-  let displayableInsts = insts.length > 0 ? insts.map((inst) => <Inst key={inst.id} inst={inst} />) : [];
+  let displayableInsts = dashboard.insts.length > 0 ? dashboard.insts.map((inst) => <Inst key={inst.id} inst={inst} />) : [];
 
   return (
     <div className={styles.outerContainer}>
