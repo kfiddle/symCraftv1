@@ -12,5 +12,7 @@
 .clickedOuterContainer {
   padding: 0.5rem;
   cursor: pointer;
-  background: rgb(229, 237, 240);
+  background: #f3f1f1;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
 }

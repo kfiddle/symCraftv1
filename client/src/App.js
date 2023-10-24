@@ -21,12 +21,9 @@ function App() {
   const dispatch = useDispatch();
 
   const insts = useGetList('insts');
-  console.log(insts)
   if (typeof insts === 'object') dispatch(instsActions.refresh(insts))
 
   const library = useGetList('pieces')
-  console.log(library)
-
   if (typeof library === 'object') dispatch(piecesActions.refresh(library))
 
 

@@ -8,8 +8,14 @@ import styles from './Subs.module.css';
 
 const Subs = () => {
   const { allInsts: insts } = useSelector((state) => state.insts);
+  const [clickedInstId, setClickedInstId] = useState();
 
-  let displayableInsts = insts.length > 0 ? insts.map((inst) => <Inst key={inst.id} inst={inst} />) : [];
+  const clickedInstHandler = (instId) => setClickedInstId(instId);
+
+  let displayableInsts =
+    insts.length > 0
+      ? insts.map((inst) => <Inst key={inst.id} inst={inst} clicker={clickedInstHandler} isClicked={inst.id === clickedInstId} />)
+      : [];
 
   return (
     <div className={styles.outerContainer}>
