@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import Input from '../../UI/input/Input';
 import Piece from './piece/Piece';
@@ -9,6 +10,8 @@ import PieceDetails from './pieceDetails/PieceDetails';
 const Library = () => {
   const [library, setLibrary] = useState([]);
   const [clickedPiece, setClickedPiece] = useState({});
+  const { allPieces: pieces } = useSelector((state) => state.pieces);
+
 
   useEffect(() => {
     const grabPieces = async () => {
@@ -28,12 +31,12 @@ const Library = () => {
 
   const clickedPieceHandler = (pieceId) => {
     console.log(pieceId);
-    setClickedPiece(library.find((piece) => piece.id === pieceId));
+    setClickedPiece(pieces.find((piece) => piece.id === pieceId));
   };
 
   let displayablePieces =
-    library.length > 0
-      ? library.map((piece) => (
+    pieces.length > 0
+      ? pieces.map((piece) => (
           <Piece
             key={piece.id}
             id={piece.id}

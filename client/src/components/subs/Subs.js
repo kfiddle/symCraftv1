@@ -1,16 +1,15 @@
 import { useState, useEffect, useContext } from 'react';
+import { useSelector } from 'react-redux';
 
 import Inst from './inst/Inst';
 import Input from '../../UI/input/Input';
 
-import generalStore from '../../contextStore/general-store';
-
 import styles from './Subs.module.css';
 
 const Subs = () => {
-  const { dashboard, dispatch } = useContext(generalStore);
+  const { allInsts: insts } = useSelector((state) => state.insts);
 
-  let displayableInsts = dashboard.insts.length > 0 ? dashboard.insts.map((inst) => <Inst key={inst.id} inst={inst} />) : [];
+  let displayableInsts = insts.length > 0 ? insts.map((inst) => <Inst key={inst.id} inst={inst} />) : [];
 
   return (
     <div className={styles.outerContainer}>

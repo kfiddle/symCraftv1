@@ -2,54 +2,42 @@ import { useEffect, useReducer, useContext } from 'react';
 
 import { BrowserRouter as Router, Route, Routes, Redirect, BrowserRouter } from 'react-router-dom';
 
+import { useDispatch, useSelector } from "react-redux";
+
+import { instsActions } from './redux-store/Insts';
+
+import useGetList from '../src/hooks/useGetList';
+
 import './App.css';
 import Layout from './UI/Layout';
 import Library from './components/library/Library';
 import Dashboard from './components/dashboard/Dashboard';
 import Subs from './components/subs/Subs';
 import Notices from './components/notices/Notices';
+import { piecesActions } from './redux-store/Library';
 
-import generalStore from './contextStore/general-store';
-
-const initialInsts = {
-  insts: [],
-};
-
-const instsReducer = (state, action) => {
-  switch (action.type) {
-    case 'insts':
-      return { ...state, insts: action.insts };
-  }
-};
 
 function App() {
-  const [dashboard, dispatch] = useReducer(instsReducer, initialInsts);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const getInsts = async () => {
-      try {
-        const reply = await fetch('http://localhost:3000/insts');
-        if (reply.ok) {
-          const jsonified = await reply.json();
-          dispatch({ type: 'insts', insts: jsonified });
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getInsts();
-  }, []);
+  const insts = useGetList('insts');
+  console.log(insts)
+  if (typeof insts === 'object') dispatch(instsActions.refresh(insts))
+
+  const library = useGetList('pieces')
+  console.log(library)
+
+  if (typeof library === 'object') dispatch(piecesActions.refresh(library))
+
 
   return (
     <Layout>
-      <generalStore.Provider value={{ dashboard, dispatch }}>
         <Routes>
           <Route path="/library" element={<Library />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/subs" element={<Subs />} />
           <Route path="/notices" element={<Notices />} />
         </Routes>
-      </generalStore.Provider>
     </Layout>
   );
 }
