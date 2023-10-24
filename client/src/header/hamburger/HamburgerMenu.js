@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import styles from './HamburgerMenu.module.css';
+import PlayerEntry from "../../components/entryForms/player/PlayerEntry";
 
 const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
   const [hovering, setHovering] = useState(false);
@@ -21,7 +22,7 @@ const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
 
   const clicker = () => {
     // stripesHandler();
-    console.log('clicked')
+    setClicked(previous => !previous)
   };
  
   return (
@@ -36,6 +37,7 @@ const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
         <span className={stripeMover(2)}></span>
         <span className={stripeMover(3)}></span>
       </div>
+      {clicked && <PlayerEntry />}
     </div>
   );
 };

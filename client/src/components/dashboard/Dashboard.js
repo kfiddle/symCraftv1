@@ -44,6 +44,23 @@ const Dashboard = () => {
     }
   };
 
+  const submitPlayer = async () => {
+    const newPlayer = {
+      first: 'Erik',
+      last: 'Sundet',
+      type: 'sub',
+      rank: 1,
+      insts: ['trumpet', 'oboe'],
+      email: 'kenjfiddle@gmail.com',
+    };
+
+    const reply = await fetch('http://localhost:3000/players', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newPlayer),
+    });
+  };
+
   return (
     <div className={styles.outerContainer}>
       <div style={{ width: '30%', margin: '5rem' }}>
@@ -75,7 +92,8 @@ const Dashboard = () => {
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
           <SubmitButton submitFunc={submitPieceTester} />
         </div>
-        <LibraryUploader />
+        <button onClick={submitPlayer}>Player</button>
+        {/* <LibraryUploader /> */}
       </div>
     </div>
   );

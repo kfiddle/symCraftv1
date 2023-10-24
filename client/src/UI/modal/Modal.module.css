@@ -1,0 +1,109 @@
+.outerContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+  position: fixed;
+  top: 0vh;
+  height: 100vh;
+  left: 40%;
+  width: 60%;
+  background: white;
+  padding: 1rem;
+  /* border-radius: 14px; */
+  /* box-shadow: 0 2px 8px rgba(245, 210, 210, 0.25); */
+  z-index: 30;
+  animation: slide-down 300ms ease-out forwards;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+}
+
+.xIcon {
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.xIcon:hover {
+  color: chartreuse;
+}
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateX(50rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.control {
+  margin-bottom: 0.5rem;
+}
+
+.control label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.control input,
+.control textarea {
+  font: inherit;
+  padding: 1rem;
+  border-radius: 4px;
+  background: #f3f1f1;
+
+  border: 1px solid #c1d1d1;
+  display: block;
+  width: 100%;
+  font-size: 1.25rem;
+}
+
+.control input:focus,
+.control textarea:focus {
+  background: #f3f1f1;
+  outline-color: teal;
+}
+
+.w9Div {
+  display: flex;
+  margin: 2rem 3rem;
+}
+
+.w9Div label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.w9Div input {
+  width: 10%;
+}
+
+.button {
+  width: fit-content;
+  background: #302c2c;
+  margin-left: 5rem;
+}
+
+.button:hover {
+  background: slateblue;
+  color: #252525;
+}
