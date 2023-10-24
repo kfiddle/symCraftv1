@@ -33,15 +33,14 @@
   height: 100%;
 }
 
-.xIcon {
-  color: white;
+.closeX {
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 2rem;
   cursor: pointer;
 }
 
-.xIcon:hover {
-  color: chartreuse;
+.closeX:hover {
+  color: blue;
 }
 @keyframes slide-down {
   from {

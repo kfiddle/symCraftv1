@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { Fragment, useState } from 'react';
 
 import styles from './HamburgerMenu.module.css';
-import PlayerEntry from "../../components/entryForms/player/PlayerEntry";
+import PlayerEntry from '../../components/entryForms/player/PlayerEntry';
 
 const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
   const [hovering, setHovering] = useState(false);
@@ -22,23 +22,23 @@ const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
 
   const clicker = () => {
     // stripesHandler();
-    setClicked(previous => !previous)
+    setClicked(true);
   };
- 
+
+  const closeModal = () => setClicked(false);
+
+
   return (
-    <div
-      className={styles.outerHamburger}
-      onMouseEnter={hovered(true)}
-      onMouseLeave={hovered(false)}
-      onClick={clicker}
-    >
-      <div className={styles.centeringBox}>
-        <span className={stripeMover(1)}></span>
-        <span className={stripeMover(2)}></span>
-        <span className={stripeMover(3)}></span>
+    <Fragment>
+      <div className={styles.outerHamburger} onMouseEnter={hovered(true)} onMouseLeave={hovered(false)} onClick={clicker}>
+        <div className={styles.centeringBox}>
+          <span className={stripeMover(1)}></span>
+          <span className={stripeMover(2)}></span>
+          <span className={stripeMover(3)}></span>
+        </div>
       </div>
-      {clicked && <PlayerEntry />}
-    </div>
+      {clicked && <PlayerEntry closeModal={closeModal} />}
+    </Fragment>
   );
 };
 
