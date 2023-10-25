@@ -11,7 +11,7 @@ import styles from './Subs.module.css';
 
 const Subs = () => {
   const { allInsts: insts } = useSelector((state) => state.insts);
-  const [clickedInst, setClickedInst] = useState({});
+  const [clickedInst, setClickedInst] = useState(null);
   const [subsOfInst, setSubsOfInst] = useState([]);
 
   useEffect(() => {
