@@ -12,7 +12,6 @@ const Library = () => {
   const [clickedPiece, setClickedPiece] = useState({});
   const { allPieces: pieces } = useSelector((state) => state.pieces);
 
-
   // useEffect(() => {
   //   const grabPieces = async () => {
   //     try {
@@ -35,16 +34,7 @@ const Library = () => {
 
   let displayablePieces =
     pieces.length > 0
-      ? pieces.map((piece) => (
-          <Piece
-            key={piece.id}
-            id={piece.id}
-            composerLast={piece.composerLast}
-            title={piece.title}
-            clicker={clickedPieceHandler}
-            isClicked={piece.id === clickedPiece.id}
-          />
-        ))
+      ? pieces.map((piece) => <Piece key={piece.id} piece={piece} clicker={clickedPieceHandler} isClicked={piece.id === clickedPiece.id} />)
       : '';
 
   return (

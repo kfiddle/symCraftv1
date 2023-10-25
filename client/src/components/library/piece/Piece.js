@@ -1,7 +1,7 @@
 import styles from './Piece.module.css';
 
-const Piece = ({ id, composerLast, title, clicker, isClicked }) => {
-
+const Piece = ({ piece, clicker, isClicked }) => {
+const { id, composerLast, title } = piece
   const clickHandler = () => clicker(id);
 
   const style = isClicked ? styles.clickedOuterContainer : styles.outerContainer;

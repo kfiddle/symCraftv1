@@ -10,24 +10,29 @@ import useGetList from '../../hooks/useGetList';
 import styles from './Dashboard.module.css';
 import LibraryUploader from '../library/LibraryUploader';
 
+import Gig from './gig/Gig';
 import Input from '../../UI/input/Input';
 import SubmitButton from '../../UI/submitButton/SubmitButton';
 
 const Dashboard = () => {
+  const [clickedGig, setClickedGig] = useState({});
   const { allGigs: gigs } = useSelector((state) => state.gigs);
 
   const dispatch = useDispatch();
 
   const insts = useGetList('insts');
-  if (typeof insts === 'object') dispatch(instsActions.refresh(insts))
+  if (typeof insts === 'object') dispatch(instsActions.refresh(insts));
 
-  const library = useGetList('pieces')
-  if (typeof library === 'object') dispatch(piecesActions.refresh(library))
+  const library = useGetList('pieces');
+  if (typeof library === 'object') dispatch(piecesActions.refresh(library));
 
-  const gigsResponse = useGetList('gigs')
-  if (typeof gigsResponse === 'object') dispatch(gigsActions.refresh(gigsResponse))
+  const gigsResponse = useGetList('gigs');
+  if (typeof gigsResponse === 'object') dispatch(gigsActions.refresh(gigsResponse));
 
-  console.log(gigs)
+
+  const gigClicker = (gigId) => setClickedGig(gigs.find(gig => gig.id === gigId)); 
+
+  const displayableGigs = gigs.length > 0 ? gigs.map((gig) => <Gig key={gig.id} gig={gig} clicker={gigClicker} isClicked={gig.id === clickedGig.id} />) : [];
 
   return (
     <div className={styles.outerContainer}>
@@ -35,7 +40,9 @@ const Dashboard = () => {
         <div className={styles.inputDiv}>
           <Input placeholder="Enter Search Term" />
         </div>
-        <div className={styles.piecesBox}></div>
+        <div className={styles.piecesBox}>
+          {displayableGigs}
+        </div>
       </div>
       {/* <div className={styles.rightBox}>{clickedPiece && <PieceDetails piece={clickedPiece} />}</div> */}
     </div>
