@@ -1,4 +1,28 @@
-
 .outerContainer {
   margin-top: 8rem;
+  height: calc(100vh - 8rem);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.leftBox {
+  border: 1px solid black;
+}
+
+.rightBox {
+  border: 1px solid black;
+  padding: 4rem;
+}
+
+.inputDiv {
+  margin-bottom: 1rem;
+}
+
+.piecesBox {
+  overflow: auto;
+  max-height: 70vh;
+}
+
+.piecesBox::-webkit-scrollbar {
+  display: none;
 }

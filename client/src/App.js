@@ -18,13 +18,13 @@ import { piecesActions } from './redux-store/Library';
 
 
 function App() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const insts = useGetList('insts');
-  if (typeof insts === 'object') dispatch(instsActions.refresh(insts))
+  // const insts = useGetList('insts');
+  // if (typeof insts === 'object') dispatch(instsActions.refresh(insts))
 
-  const library = useGetList('pieces')
-  if (typeof library === 'object') dispatch(piecesActions.refresh(library))
+  // const library = useGetList('pieces')
+  // if (typeof library === 'object') dispatch(piecesActions.refresh(library))
 
 
   return (

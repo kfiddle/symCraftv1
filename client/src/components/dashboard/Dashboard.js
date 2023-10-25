@@ -1,4 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { instsActions } from '../../redux-store/Insts';
+import { piecesActions } from '../../redux-store/Library';
+import { gigsActions } from '../../redux-store/gigs';
+
+import useGetList from '../../hooks/useGetList';
 
 import styles from './Dashboard.module.css';
 import LibraryUploader from '../library/LibraryUploader';
@@ -7,94 +14,30 @@ import Input from '../../UI/input/Input';
 import SubmitButton from '../../UI/submitButton/SubmitButton';
 
 const Dashboard = () => {
-  const [instDetails, setInstDetails] = useState({ name: '', abbreviation: '' });
-  const [pieceDetails, setPieceDetails] = useState({});
+  const { allGigs: gigs } = useSelector((state) => state.gigs);
 
-  const instInputHandler = (type) => (e) => {
-    console.log(type);
-    if (type === 'name') setInstDetails({ ...instDetails, name: e.target.value });
-    else setInstDetails({ ...instDetails, abbreviation: e.target.value });
-  };
+  const dispatch = useDispatch();
 
-  const inputHandler = (key) => (e) => setPieceDetails({ ...pieceDetails, [key]: e.target.value });
+  const insts = useGetList('insts');
+  if (typeof insts === 'object') dispatch(instsActions.refresh(insts))
 
-  const submitInstTester = async () => {
-    try {
-      const reply = await fetch('http://localhost:3000/insts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(instDetails),
-      });
-      if (reply.ok) console.log(reply);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const library = useGetList('pieces')
+  if (typeof library === 'object') dispatch(piecesActions.refresh(library))
 
-  const submitPieceTester = async () => {
-    try {
-      const reply = await fetch('http://localhost:3000/pieces', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(pieceDetails),
-      });
-      if (reply.ok) console.log(reply);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const gigsResponse = useGetList('gigs')
+  if (typeof gigsResponse === 'object') dispatch(gigsActions.refresh(gigsResponse))
 
-  const submitPlayer = async () => {
-    const newPlayer = {
-      first: 'Erik',
-      last: 'Sundet',
-      type: 'sub',
-      rank: 1,
-      insts: ['trumpet', 'oboe'],
-      email: 'kenjfiddle@gmail.com',
-    };
-
-    const reply = await fetch('http://localhost:3000/players', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newPlayer),
-    });
-  };
+  console.log(gigs)
 
   return (
     <div className={styles.outerContainer}>
-      <div style={{ width: '30%', margin: '5rem' }}>
-        <Input placeholder={'instName'} onChangeHandler={instInputHandler('name')} />
-        <Input placeholder={'abbreviation'} onChangeHandler={instInputHandler('abbreviation')} />
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
-          <SubmitButton submitFunc={submitInstTester} />
+      <div className={styles.leftBox}>
+        <div className={styles.inputDiv}>
+          <Input placeholder="Enter Search Term" />
         </div>
+        <div className={styles.piecesBox}></div>
       </div>
-      <div style={{ marginTop: '3rem', borderTop: 'solid 2px midnightBlue' }}></div>
-      <div>
-        <Input placeholder={'title'} onChangeHandler={inputHandler('title')} />
-        <Input placeholder={'composerLast'} onChangeHandler={inputHandler('composerLast')} />
-        <Input placeholder={'composerFirst'} onChangeHandler={inputHandler('composerFirst')} />
-        <Input placeholder={'prefix'} onChangeHandler={inputHandler('prefix')} />
-        <Input placeholder={'libNumber'} onChangeHandler={inputHandler('libNumber')} />
-        <Input placeholder={'suffix'} onChangeHandler={inputHandler('suffix')} />
-        <Input placeholder={'arranger'} onChangeHandler={inputHandler('arranger')} />
-        <Input placeholder={'otherName'} onChangeHandler={inputHandler('otherName')} />
-        <Input placeholder={'publisher'} onChangeHandler={inputHandler('publisher')} />
-        <Input placeholder={'duration'} onChangeHandler={inputHandler('duration')} />
-        <Input placeholder={'windsBrass'} onChangeHandler={inputHandler('windsBrass')} />
-        <Input placeholder={'vocalistSoloist'} onChangeHandler={inputHandler('vocalistSoloist')} />
-        <Input placeholder={'percBreakdown'} onChangeHandler={inputHandler('percBreakdown')} />
-        <Input placeholder={'notes'} onChangeHandler={inputHandler('notes')} />
-        <Input placeholder={'status'} onChangeHandler={inputHandler('status')} />
-        <Input placeholder={'sign'} onChangeHandler={inputHandler('sign')} />
-        <Input placeholder={'updated'} onChangeHandler={inputHandler('updated')} />
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
-          <SubmitButton submitFunc={submitPieceTester} />
-        </div>
-        <button onClick={submitPlayer}>Player</button>
-        {/* <LibraryUploader /> */}
-      </div>
+      {/* <div className={styles.rightBox}>{clickedPiece && <PieceDetails piece={clickedPiece} />}</div> */}
     </div>
   );
 };
