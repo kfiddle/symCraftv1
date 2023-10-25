@@ -20,7 +20,7 @@ const Modal = ({ closeModal, children }) => {
 
       {ReactDOM.createPortal(
         <ModalOverlay>
-          <div>
+          <div className={classes.containingDiv}>
             <h2 onClick={closeModal} className={classes.closeX}>
               X
             </h2>

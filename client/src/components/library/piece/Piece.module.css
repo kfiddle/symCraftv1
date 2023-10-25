@@ -1,5 +1,5 @@
 .outerContainer {
-  padding: 0.5rem;
+  padding: 0.5rem 0 0.5rem 1rem;
   cursor: pointer;
 }
 
@@ -10,7 +10,7 @@
 }
 
 .clickedOuterContainer {
-  padding: 0.5rem;
+  padding: 0.5rem 0 0.5rem 1rem;
   cursor: pointer;
   background: #f3f1f1;
   border-top: 2px solid black;

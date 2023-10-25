@@ -13,24 +13,23 @@ const Library = () => {
   const { allPieces: pieces } = useSelector((state) => state.pieces);
 
 
-  useEffect(() => {
-    const grabPieces = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/pieces');
-        if (response.ok) {
-          let jsonified = await response.json();
-          setLibrary(jsonified);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  // useEffect(() => {
+  //   const grabPieces = async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:3000/pieces');
+  //       if (response.ok) {
+  //         let jsonified = await response.json();
+  //         setLibrary(jsonified);
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
 
-    grabPieces();
-  }, []);
+  //   grabPieces();
+  // }, []);
 
   const clickedPieceHandler = (pieceId) => {
-    console.log(pieceId);
     setClickedPiece(pieces.find((piece) => piece.id === pieceId));
   };
 

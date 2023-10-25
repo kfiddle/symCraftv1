@@ -43,6 +43,13 @@
 .closeX:hover {
   color: blue;
 }
+
+.containingDiv {
+  overflow: auto;
+  max-height: 95vh;
+
+}
+
 @keyframes slide-down {
   from {
     opacity: 0;

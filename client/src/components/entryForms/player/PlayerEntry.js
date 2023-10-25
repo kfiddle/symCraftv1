@@ -34,7 +34,7 @@ const PlayerEntry = ({ closeModal }) => {
   return (
     <Modal closeModal={closeModal}>
       <div className={styles.outerContainer}>
-        {/* <h3>New Player</h3> */}
+        <h3>New Player</h3>
         <div className={styles.nameInstsDiv}>
           <div className={styles.name}>
             <label>First Name</label>
