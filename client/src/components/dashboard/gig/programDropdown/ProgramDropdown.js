@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
+
+import useGetFetch from '../../../../hooks/useGetFetch';
+
 import styles from './ProgramDropdown.module.css';
+import DropPiece from './dropPiece/DropPiece';
 
-const ProgramDropdown = ({ program, gigId }) => {
-  const [pieces, setPieces] = useState([]);
-  console.log(program);
+const ProgramDropdown = ({ gigId }) => {
+  const url = process.env.REACT_APP_SERVER + 'pieces/find_by_gig/' + gigId;
+  const { data: pieces, loading, error } = useGetFetch(url);
+  let displayablePieces = [];
 
-  useEffect(() => {
-    const getPieces = async() => {
-      // get response = await fetch(process.env.REACT_APP_SERVER + 'pieces/find_by_gig/' + gigId)
-    }
+  if (pieces) {
+    displayablePieces = pieces.map((piece) => <DropPiece key={piece.id} piece={piece} />);
+  }
 
-
-  }, []);
-
-
-  return <div>I will be a big ol dropdown</div>;
+  return <div>{displayablePieces}</div>;
 };
 
 export default ProgramDropdown;

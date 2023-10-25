@@ -13,7 +13,7 @@ const Gig = ( {gig, isClicked, clicker}) => {
   return (
     <div className={style} onClick={clickHandler}>
       {title}
-      {isClicked && <ProgramDropdown program={program} gigId={id} />}
+      {isClicked && <ProgramDropdown gigId={id} />}
     </div>
   );
 };
