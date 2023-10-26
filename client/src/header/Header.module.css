@@ -84,8 +84,10 @@ h1 {
 }
 
 .active {
-  text-decoration: none;
-  color: rgb(45, 21, 231);;
+  /* text-decoration: none; */
+  color:#2137b3;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 1rem;
   transition: 0.3s;
   font-size: 1.5rem;
   letter-spacing: 0.05em;

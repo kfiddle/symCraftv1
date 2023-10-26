@@ -4,8 +4,10 @@ const DropPiece = ({ piece, isClicked, clicker }) => {
   const { id, title } = piece;
   const clickHandler = () => clicker(id);
 
+  const style = isClicked ? styles.clickedOuterContainer : styles.outerContainer;
+
   return (
-    <div onClick={clickHandler} className={styles.outerContainer}>
+    <div onClick={clickHandler} className={style}>
       {piece.title}
     </div>
   );
