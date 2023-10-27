@@ -5,22 +5,24 @@ import generalStore from '../../../contextStore/general-store';
 
 import RosterGenerator from '../../rosterGenerator/RosterGenerator';
 
-
 import styles from './Roster.module.css';
+import fetchPost from '../../../utils/fetchPost';
 
 const composerAndWorkUrl = 'daniels_query/by_composer_work';
 const workDetailsUrl = 'daniels_query/work_by_id';
 
 const Roster = () => {
-  const { dashState } = useContext(generalStore);
+  const { dashState, rosterDispatch } = useContext(generalStore);
   const { allInsts: insts } = useSelector((state) => state.insts);
-
 
   const submitComposerAndWork = async () => {
     const objToSend = { composer: 'Beethoven', work: 'Symphony No.5' };
-    console.log(insts)
-  
-    console.log(RosterGenerator(insts, '2222-2222', gig ));
+    console.log(insts);
+
+    const newChairs = RosterGenerator(insts, '4[1.2.3/pic2.pic1]111—1111', '653928508aa03f88ba86d6a2', 2);
+
+    const chairsReply = await fetchPost('chairs/', newChairs);
+    console.log(chairsReply)
 
     // if (containsSymphony(work)) {
     //   objToSend.work = `Symphony No.${returnNumber(work)}`;
@@ -54,8 +56,6 @@ const Roster = () => {
     }
   };
 
-
-
   let displayableChairs = [];
   if (dashState.chairs.length > 0) {
     let chairs = dashState.chairs.reduce((list, chair) => {
@@ -74,10 +74,13 @@ const Roster = () => {
     ));
   }
 
-  return <div>{displayableChairs}
-  <button onClick={submitComposerAndWork}>TEST DANIELS</button>
-  <button onClick={submitWork}>TEST DANIELS SINGLE WORK</button>
-  </div>;
+  return (
+    <div>
+      {displayableChairs}
+      <button onClick={submitComposerAndWork}>TEST DANIELS</button>
+      <button onClick={submitWork}>TEST DANIELS SINGLE WORK</button>
+    </div>
+  );
 };
 
 export default Roster;

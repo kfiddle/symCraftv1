@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import fetchGet from '../../../../utils/fetchGet';
 
@@ -10,6 +11,7 @@ import styles from './ProgramDropdown.module.css';
 const ProgramDropdown = ({ gigId }) => {
   const [pieces, setPieces] = useState([]);
   const [clickedPiece, setClickedPiece] = useState({});
+  const { allInsts : insts } = useSelector(state => state.insts)
 
   const { rosterDispatch } = useContext(generalStore);
 
@@ -29,15 +31,22 @@ const ProgramDropdown = ({ gigId }) => {
   }, []);
 
   const pieceClicker = async (pieceId, programNum) => {
-
     setClickedPiece(pieces.find((piece) => piece.id === pieceId));
     let response = await fetchGet(`chairs/by_gig_and_num?gigId=${gigId}&pieceNum=${programNum}`);
-    if (response !== 'failed') rosterDispatch({ type: 'chairs', chairs: response });
+    console.log(response)
+    for (let chair of response) {
+      let instToFind = insts.find((inst) => inst.id === chair.parts[0].inst);
+      console.log(chair.parts[0].inst);
+      console.log(instToFind.name);
+    }
+    // if (response !== 'failed') rosterDispatch({ type: 'chairs', chairs: response });
   };
 
   const displayablePieces =
     pieces.length > 0
-      ? pieces.map((piece, index) => <DropPiece key={piece.id} piece={piece} clicker={pieceClicker} isClicked={piece.id === clickedPiece.id} programNum={index + 1}/>)
+      ? pieces.map((piece, index) => (
+          <DropPiece key={piece.id} piece={piece} clicker={pieceClicker} isClicked={piece.id === clickedPiece.id} programNum={index + 1} />
+        ))
       : [];
 
   return <div>{displayablePieces}</div>;
