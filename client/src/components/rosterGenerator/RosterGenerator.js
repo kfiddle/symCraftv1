@@ -126,4 +126,5 @@ const libraryLine = originalLibLine.replace(/\s+/g, '');
   return isValid ? chairsOnStage : false;
 };
 
+export const instIdFromAbbrev = RosterGenerator.instIdFromAbbrev;
 export default RosterGenerator;

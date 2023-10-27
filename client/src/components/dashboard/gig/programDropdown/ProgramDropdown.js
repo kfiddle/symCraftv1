@@ -33,11 +33,9 @@ const ProgramDropdown = ({ gigId }) => {
   const pieceClicker = async (pieceId, programNum) => {
     setClickedPiece(pieces.find((piece) => piece.id === pieceId));
     let response = await fetchGet(`chairs/by_gig_and_num?gigId=${gigId}&pieceNum=${programNum}`);
-    console.log(response)
     for (let chair of response) {
       let instToFind = insts.find((inst) => inst.id === chair.parts[0].inst);
-      console.log(chair.parts[0].inst);
-      console.log(instToFind.name);
+      console.log(instToFind);
     }
     // if (response !== 'failed') rosterDispatch({ type: 'chairs', chairs: response });
   };
