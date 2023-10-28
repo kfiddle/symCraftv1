@@ -19,7 +19,7 @@ const Header = ({ stripesHandler, setSideBarOpen }) => {
         <ul>
           <li className={styles.navItem}>
             <NavLink
-              to={'/dashboard'}
+              to={'/'}
               className={({ isActive }) => (isActive ? styles.active : styles.inActive)}
               // onClick={closeSideBar}
               // activeClassName={styles.active}

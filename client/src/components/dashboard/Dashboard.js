@@ -35,14 +35,14 @@ const Dashboard = () => {
 
   const dispatch = useDispatch();
 
-  const insts = useGetList('insts');
-  if (typeof insts === 'object') dispatch(instsActions.refresh(insts));
+  // const insts = useGetList('insts');
+  // if (typeof insts === 'object') dispatch(instsActions.refresh(insts));
 
-  const library = useGetList('pieces');
-  if (typeof library === 'object') dispatch(piecesActions.refresh(library));
+  // const library = useGetList('pieces');
+  // if (typeof library === 'object') dispatch(piecesActions.refresh(library));
 
-  const gigsResponse = useGetList('gigs');
-  if (typeof gigsResponse === 'object') dispatch(gigsActions.refresh(gigsResponse));
+  // const gigsResponse = useGetList('gigs');
+  // if (typeof gigsResponse === 'object') dispatch(gigsActions.refresh(gigsResponse));
 
   const gigClicker = (gigId) => setClickedGig(gigs.find((gig) => gig.id === gigId));
 

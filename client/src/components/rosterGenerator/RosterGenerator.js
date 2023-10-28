@@ -10,8 +10,9 @@
 //   ],
 // });
 
-const RosterGenerator = (insts, originalLibLine, gigId, pieceNum = 0) => {
-const libraryLine = originalLibLine.replace(/\s+/g, '');
+const RosterGenerator = (rosterParams) => {
+  const { insts, originalLibLine, gigId, pieceNum = 0, stringsConfig } = rosterParams;
+  const libraryLine = originalLibLine.replace(/\s+/g, '');
 
   class Part {
     constructor(instId, rank) {
@@ -32,7 +33,10 @@ const libraryLine = originalLibLine.replace(/\s+/g, '');
   }
 
   const primaryNames = ['flute', 'oboe', 'clarinet', 'bassoon', 'horn', 'trumpet', 'trombone', 'tuba'];
-  const primaries = primaryNames.map((name) => insts.find((inst) => inst.name === name));
+  const strings = ['violin1', 'violin2', 'viola', 'cello', 'bass'];
+  
+  const primaryWindsBrass = insts.filter(inst => primaryNames.includes(inst.name));
+  const stringInsts = insts.filter(inst => strings.includes(inst.name));
 
   let isValid = true;
   let chairsOnStage = [];
@@ -63,9 +67,9 @@ const libraryLine = originalLibLine.replace(/\s+/g, '');
   };
 
   // '4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1]
-//0 0 
+  //0 0
   const goBetweenBrackets = (j, index) => {
-    let primaryInst = primaries[index];
+    let primaryInst = primaryWindsBrass[index];
     if (primaryInst === undefined) {
       isValid = false;
       return;
@@ -77,7 +81,6 @@ const libraryLine = originalLibLine.replace(/\s+/g, '');
       return;
     }
     let withinBracketsScoreLines = bracketSlice.slice(1, closingIndex).split('.');
-    console.log(withinBracketsScoreLines)
 
     // by now, we will have only an array of [1, 2, 3/pic]
     //     or, 3[1, 2, cbn], etc...
@@ -118,7 +121,7 @@ const libraryLine = originalLibLine.replace(/\s+/g, '');
           times++;
         } else if (!isNaN(text[j])) {
           for (let k = 1; k <= text[j]; k++) {
-            chairsOnStage.push(new Chair(new Part(primaries[times].id, k)));
+            chairsOnStage.push(new Chair(new Part(primaryWindsBrass[times].id, k)));
           }
           times++;
         }
@@ -127,6 +130,15 @@ const libraryLine = originalLibLine.replace(/\s+/g, '');
   };
 
   mainLoop(libraryLine);
+  const strConfig = { violin1: 12, violin2: 12, viola: 8, cello: 8, bass: 6 };
+
+  if (libraryLine.toLowerCase().includes('str')) {
+    for (let key in strConfig) {
+      for (let seat = 1; seat <= strConfig[key]; seat++) {
+        chairsOnStage.push(new Chair())
+      }
+    }
+  }
   return isValid ? chairsOnStage : false;
 };
 
