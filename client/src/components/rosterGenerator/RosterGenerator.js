@@ -10,6 +10,9 @@
 //   ],
 // });
 
+import { loop } from '../../utils/loop';
+import { addStrChairs } from './rosterUtils/utils';
+
 const RosterGenerator = (rosterParams) => {
   const { insts, originalLibLine, gigId, pieceNum = 0, stringsConfig } = rosterParams;
   const libraryLine = originalLibLine.replace(/\s+/g, '');
@@ -34,9 +37,8 @@ const RosterGenerator = (rosterParams) => {
 
   const primaryNames = ['flute', 'oboe', 'clarinet', 'bassoon', 'horn', 'trumpet', 'trombone', 'tuba'];
   const strings = ['violin1', 'violin2', 'viola', 'cello', 'bass'];
-  
-  const primaryWindsBrass = insts.filter(inst => primaryNames.includes(inst.name));
-  const stringInsts = insts.filter(inst => strings.includes(inst.name));
+
+  const primaryWindsBrass = insts.filter((inst) => primaryNames.includes(inst.name));
 
   let isValid = true;
   let chairsOnStage = [];
@@ -132,13 +134,7 @@ const RosterGenerator = (rosterParams) => {
   mainLoop(libraryLine);
   const strConfig = { violin1: 12, violin2: 12, viola: 8, cello: 8, bass: 6 };
 
-  if (libraryLine.toLowerCase().includes('str')) {
-    for (let key in strConfig) {
-      for (let seat = 1; seat <= strConfig[key]; seat++) {
-        chairsOnStage.push(new Chair())
-      }
-    }
-  }
+  if (libraryLine.toLowerCase().includes('str')) chairsOnStage.append(addStrChairs(libraryLine, strConfig));
   return isValid ? chairsOnStage : false;
 };
 

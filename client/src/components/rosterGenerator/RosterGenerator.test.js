@@ -1,6 +1,6 @@
 import RosterGenerator from './RosterGenerator';
 import { insts } from './dummyInsts';
-import { instIdFromAbbrev, renderChairWithDoublings, goBetweenBracketsFragment, mainLoop } from './rosterUtils/utils';
+import { instIdFromAbbrev, renderChairWithDoublings, goBetweenBracketsFragment, mainLoop, addStrChairs } from './rosterUtils/utils';
 
 test('should retrieve inst id from abbreviation', () => {
   const pic = 'pic';
@@ -45,8 +45,8 @@ test('rosterGenerator should function properly', () => {
   for (let chair of resultChairs) {
     console.log(chair.parts.length);
     for (let part of chair.parts) {
-      console.log(insts.find(inst => inst.id === part.inst).name);
-      console.log(part.rank)
+      console.log(insts.find((inst) => inst.id === part.inst).name);
+      console.log(part.rank);
     }
   }
   expect(resultChairs.length).toEqual(16);
@@ -57,4 +57,12 @@ test('mainLoop should work', () => {
   const lib1 = '4[1.2.3/pic2.pic1]111—1111';
   const result = mainLoop(lib1);
   // console.log(result)
+});
+
+test('should add string chairs to stage', () => {
+  const libLine1 = '2353hlshgslhgzstrksdg';
+  const strConfig = { violin1: 12, violin2: 12, viola: 8, cello: 8, bass: 6 };
+  const resultChairs = addStrChairs(libLine1, strConfig);
+  console.log(resultChairs.map(chair => chair.parts))
+  expect(resultChairs.length).toEqual(46);
 });

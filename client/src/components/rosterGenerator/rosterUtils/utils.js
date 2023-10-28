@@ -1,8 +1,11 @@
 import { insts } from '../dummyInsts';
 import { Chair, Part } from './rosterClasses';
+import { loopFromOne } from '../../../utils/loop';
 
 const primaryNames = ['flute', 'oboe', 'clarinet', 'bassoon', 'horn', 'trumpet', 'trombone', 'tuba'];
 const primaries = primaryNames.map((name) => insts.find((inst) => inst.name === name));
+const chairsOnStage = [];
+let isValid = true;
 
 export const instIdFromAbbrev = (abbrev) => {
   const matchingInst = insts.find((inst) => inst.abbreviation === abbrev);
@@ -30,7 +33,7 @@ export const renderChairWithDoublings = (primaryInst, string) => {
   return chair;
 };
 
-export const goBetweenBrackets = (j, index) => {
+export const goBetweenBrackets = (j, index, libraryLine) => {
   let primaryInst = primaries[index];
   if (primaryInst === undefined) {
     isValid = false;
@@ -109,3 +112,16 @@ export const mainLoop = (text) => {
   }
   return chairScaffold;
 };
+
+
+export const addStrChairs = (libraryLine, strSections) => {
+  if (libraryLine.toLowerCase().includes('str')) {
+    for (let section in strSections) {
+      let seats = strSections[section];
+      loopFromOne(seats, (seat) => {
+        let instId = insts.find((inst) => inst.name === section).id;
+        chairsOnStage.push(new Chair(new Part(instId, seat)));
+      });
+    }
+  } return chairsOnStage;
+}
