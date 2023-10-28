@@ -10,8 +10,8 @@
 //   ],
 // });
 
-import { loop } from '../../utils/loop';
-import { addStrChairs } from './rosterUtils/utils';
+import { isANumber } from '../../utils/smallUtils';
+import { addStrChairs } from './rosterUtils/rosterUtils';
 
 const RosterGenerator = (rosterParams) => {
   const { insts, originalLibLine, gigId, pieceNum = 0, stringsConfig } = rosterParams;
@@ -121,7 +121,7 @@ const RosterGenerator = (rosterParams) => {
         if (nextChar === '[') {
           j = goBetweenBrackets(j, times);
           times++;
-        } else if (!isNaN(text[j])) {
+        } else if (isANumber(text[j])) {
           for (let k = 1; k <= text[j]; k++) {
             chairsOnStage.push(new Chair(new Part(primaryWindsBrass[times].id, k)));
           }
