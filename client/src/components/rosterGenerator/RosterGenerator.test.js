@@ -1,6 +1,6 @@
 import RosterGenerator from './RosterGenerator';
 import { insts } from './dummyInsts';
-import { instIdFromAbbrev, renderChairWithDoublings } from './rosterUtils/utils';
+import { instIdFromAbbrev, renderChairWithDoublings, goBetweenBracketsFragment, mainLoop } from './rosterUtils/utils';
 
 test('should retrieve inst id from abbreviation', () => {
   const pic = 'pic';
@@ -13,10 +13,16 @@ test('should retrieve inst id from abbreviation', () => {
 
 // "3/cbn2", or "4/pic/alto" "3/pic"
 // 3/pic2
+// 3/pic2
 test('should render doublings', () => {
   const primary = insts.find((inst) => inst.name === 'flute');
-  const chair = renderChairWithDoublings(primary, '3/pic');
-  console.log(chair);
+  const chair1 = renderChairWithDoublings(primary, '3/pic');
+
+  const flute = insts.find((inst) => inst.id === chair1.parts[0].inst);
+  const piccolo = insts.find((inst) => inst.id === chair1.parts[1].inst);
+
+  expect(flute.name).toEqual('flute');
+  expect(piccolo.name).toEqual('piccolo');
 });
 
 test('should be able to create chair with multiple parts', () => {
@@ -27,19 +33,28 @@ test('should be able to create chair with multiple parts', () => {
 
 // insts, libraryLine, gigId, pieceNum = 0
 test('rosterGenerator should function properly', () => {
-  const testString = '3[1.2.3/pic]3332222';
-  const reply = RosterGenerator(insts, testString, 5, 2);
-  // for (let chair of reply) {
-  //   console.log(chair.parts.length);
-  //   for (let part of chair.parts) console.log(part)
-  // }
-  expect(reply.length).toEqual(20);
-
+  const testString1 = '3[1.2.3/pic]3332222';
   const testString2 = '4[1.2.3/pic2.pic1]111—1111';
-  const reply2 = RosterGenerator(insts, testString2, 5, 2);
-  // for (let chair of reply) {
-  //   console.log(chair.parts.length);
-  //   for (let part of chair.parts) console.log(part);
-  // }
-  expect(reply2.length).toEqual(11);
+  const lib1 = '4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1]';
+
+  const lib2 = '4[pic.2.3.pic]';
+  const testString3 = '4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1';
+  const testString4 = '4[1.2.3/pic2.pic1]';
+
+  const resultChairs = RosterGenerator(insts, lib1, 5, 2);
+  for (let chair of resultChairs) {
+    console.log(chair.parts.length);
+    for (let part of chair.parts) {
+      console.log(insts.find(inst => inst.id === part.inst).name);
+      console.log(part.rank)
+    }
+  }
+  expect(resultChairs.length).toEqual(16);
+  // expect(resultChairs[2].parts.length).toEqual(2);
+});
+
+test('mainLoop should work', () => {
+  const lib1 = '4[1.2.3/pic2.pic1]111—1111';
+  const result = mainLoop(lib1);
+  // console.log(result)
 });

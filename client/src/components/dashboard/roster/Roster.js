@@ -17,10 +17,8 @@ const Roster = () => {
 
   const submitComposerAndWork = async () => {
     const objToSend = { composer: 'Beethoven', work: 'Symphony No.5' };
-    console.log(insts);
 
-    const newChairs = RosterGenerator(insts, '4[1.2.3/pic2.pic1]111—1111', '653928508aa03f88ba86d6a2', 2);
-
+    const newChairs = RosterGenerator(insts, '4[1.2.3/pic2.pic1]111—1111', '653929798aa03f88ba86d6a8', 1);
     const chairsReply = await fetchPost('chairs/', newChairs);
     console.log(chairsReply)
 

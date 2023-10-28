@@ -62,6 +62,8 @@ const libraryLine = originalLibLine.replace(/\s+/g, '');
     return chair;
   };
 
+  // '4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1]
+//0 0 
   const goBetweenBrackets = (j, index) => {
     let primaryInst = primaries[index];
     if (primaryInst === undefined) {
@@ -75,6 +77,7 @@ const libraryLine = originalLibLine.replace(/\s+/g, '');
       return;
     }
     let withinBracketsScoreLines = bracketSlice.slice(1, closingIndex).split('.');
+    console.log(withinBracketsScoreLines)
 
     // by now, we will have only an array of [1, 2, 3/pic]
     //     or, 3[1, 2, cbn], etc...
@@ -85,7 +88,7 @@ const libraryLine = originalLibLine.replace(/\s+/g, '');
       // in case the scoreline is an abbreviation only, like "cbn" or "pic";
       const instFromAbbreviation = instIdFromAbbrev(scoreLine);
       const fromAbbrevWithRank = instIdFromAbbrev(scoreLine.slice(0, -1));
-      if (instFromAbbreviation) chairsOnStage.push(new Chair(new Part(instFromAbbreviation.id)));
+      if (instFromAbbreviation) chairsOnStage.push(new Chair(new Part(instFromAbbreviation)));
       // if scoreline is just a number, make a chair from the primary inst and the number
       else if (!isNaN(scoreLine)) {
         let rank = scoreLine;
@@ -94,7 +97,7 @@ const libraryLine = originalLibLine.replace(/\s+/g, '');
         // in case scoreline ends with a number, like "cbn2", or "crnt3"
       } else if (fromAbbrevWithRank && !isNaN(scoreLine.slice(-1))) {
         const rank = scoreLine.slice(-1);
-        chairsOnStage.push(new Chair(new Part(fromAbbrevWithRank.id, rank)));
+        chairsOnStage.push(new Chair(new Part(fromAbbrevWithRank, rank)));
 
         // in this case, scoreline would be something like "3/cbn2"
       } else {
@@ -104,6 +107,7 @@ const libraryLine = originalLibLine.replace(/\s+/g, '');
     return closingIndex + j;
   };
 
+  // '4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1]
   const mainLoop = (text) => {
     let times = 0;
     for (let j = 0; j < text.length; j++) {
