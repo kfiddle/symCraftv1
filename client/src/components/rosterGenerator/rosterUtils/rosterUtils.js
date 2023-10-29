@@ -30,6 +30,11 @@ export const instIdFromAbbrev = (abbrev) => {
   return matchingInst ? matchingInst.id : 0;
 };
 
+export const instFromAbbrev = (abbrev) => {
+  const matchingInst = insts.find((inst) => inst.abbreviation === abbrev);
+  return matchingInst ? matchingInst : 0;
+};
+
 // "3/cbn2", or "4/pic/alto" "3/pic"
 // 3/pic2
 export const renderChairWithDoublings = (primaryInst, string) => {
@@ -97,7 +102,7 @@ export const goBetweenBrackets = (j, index, libraryLine) => {
 // will for example take    '1.2.3/pic2.pic1'
 // '1.2.3.Eh'    '1.2.3/Ebcl.bcl' '1.2.3/cbn2.cbn1'
 
-export const addChairFromNumberOnly = (num) => chairsOnStage.push(new Chair(new Part())) 
+export const addChairFromNumberOnly = (num) => chairsOnStage.push(new Chair(new Part()));
 
 export const addChairsFromInBrackets = (libLineFragment, index) => {
   let primaryInst = primaryIds[index];
@@ -113,23 +118,21 @@ export const addChairsFromInBrackets = (libLineFragment, index) => {
   }
   let withinBracketsScoreLines = bracketSlice.slice(1, closingIndex).split('.');
   return withinBracketsScoreLines;
-}
+};
 
 // 4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1
 
-const addBetweenBracketsChairs = (libLineFragment, primariesIndex) => {
-
-}
+const addBetweenBracketsChairs = (libLineFragment, primariesIndex) => {};
 
 // 4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1
-    // 4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — backstage: 3tp, 4Wag tubas[2ten, 2bass] — tmp+4 — 3hp — cel, pf — str
-    // 4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — tmp+4 — 3hp — cel, pf — str
-    // 3[1.2.pic]  2  2  3[1.2.cbn] — 4  2  3  0 — tmp+3 — str
-    // 3[1.2.3/pic]  2  2  2 — 4  2  3  1 — tmp+2 — str
-    // 3[1.2/pic.3/pic]  3[1.2.Eh]  3[1.2.bcl]  2 — 4  2  3  1 — tmp+2 — 2hp — cel — str
-    // 3[1.2.pic]  2  2  2 — 4  4[2tp, 2crt]  3  1 — tmp+3 — hp — str
-    // 3  3  3  3 — 8[5-8/Wag tb]  3  3  1 — tmp — str
-    // 2222 - 2222 - str - hp
+// 4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — backstage: 3tp, 4Wag tubas[2ten, 2bass] — tmp+4 — 3hp — cel, pf — str
+// 4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — tmp+4 — 3hp — cel, pf — str
+// 3[1.2.pic]  2  2  3[1.2.cbn] — 4  2  3  0 — tmp+3 — str
+// 3[1.2.3/pic]  2  2  2 — 4  2  3  1 — tmp+2 — str
+// 3[1.2/pic.3/pic]  3[1.2.Eh]  3[1.2.bcl]  2 — 4  2  3  1 — tmp+2 — 2hp — cel — str
+// 3[1.2.pic]  2  2  2 — 4  4[2tp, 2crt]  3  1 — tmp+3 — hp — str
+// 3  3  3  3 — 8[5-8/Wag tb]  3  3  1 — tmp — str
+// 2222 - 2222 - str - hp
 
 export const mainLoop = (libraryLine) => {
   let times = 0;
@@ -141,7 +144,7 @@ export const mainLoop = (libraryLine) => {
         times++;
       } else if (isANumber(libraryLine[j])) {
         for (let seat = 1; seat <= libraryLine[j]; seat++) {
-          chairsOnStage.push({part: primaryIds[times], rank: seat})
+          chairsOnStage.push({ part: primaryIds[times], rank: seat });
         }
         times++;
       }
@@ -149,7 +152,6 @@ export const mainLoop = (libraryLine) => {
   }
   return chairsOnStage;
 };
-
 
 export const addStrChairs = (libraryLine, strSections) => {
   if (libraryLine.toLowerCase().includes('str')) {
@@ -160,5 +162,6 @@ export const addStrChairs = (libraryLine, strSections) => {
         chairsOnStage.push(new Chair(new Part(instId, seat)));
       });
     }
-  } return chairsOnStage;
-}
+  }
+  return chairsOnStage;
+};

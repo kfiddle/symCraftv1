@@ -8,7 +8,12 @@ import {
   primaryBrass,
   makeWindChairs,
   extractChairsFromSectionChunk,
+  makePartFromNumOnEnd,
+  makePart,
+  makeChairFromSlashes,
+  instFromAbbrev,
 } from './mainChunks';
+import { instIdFromAbbrev } from './rosterUtils';
 
 test('main loop should return full array of chunks', () => {
   const lib0 = '3[1.2.pic] 2 2 2 - 4 4 4 4 ';
@@ -70,5 +75,88 @@ test('should make wind chairs of full wind section from number', () => {
 test('should make sections of winds from string', () => {
   const string1 = '1.2.3.Eh';
   const results = extractChairsFromSectionChunk(insts[0], string1);
-  expect(results.length).toEqual(3)
+  expect(results.length).toEqual(4);
 });
+
+test('should create part from an abbrev with a digit', () => {
+  const pic2 = 'pic2';
+  const eh3 = 'Eh3';
+  const cbn2 = 'cbn1';
+  const non4 = 'non4';
+
+  const pic2Part = makePartFromNumOnEnd(pic2);
+  const eh3Part = makePartFromNumOnEnd(eh3);
+  const cbn2Part = makePartFromNumOnEnd(cbn2);
+  const nonPart = makePartFromNumOnEnd(non4);
+
+  expect(pic2Part).toEqual({ inst: instIdFromAbbrev('pic'), rank: 2 });
+  expect(eh3Part).toEqual({ inst: instIdFromAbbrev('Eh'), rank: 3 });
+  expect(cbn2Part).toEqual({ inst: instIdFromAbbrev('cbn'), rank: 1 });
+  expect(nonPart).toEqual(undefined);
+});
+
+// this.gig = '12';
+// this.pieceNum = '3';
+
+// 3/pic2, pic1, 2/alt3/pic2'
+test('should make doublings from slashes', () => {
+  const flute = { id: 'flute' };
+  const one = '3/pic2';
+  const two = 'pic1';
+  const three = '2/alt3/pic2';
+
+  // const chair1 = makeChairFromSlashes(flute, one);
+  // const chair2 = makeChairFromSlashes(flute, two);
+  // const chair3 = makeChairFromSlashes(flute, three);
+
+  // expect(chair1).toEqual({
+  //   gig: '12',
+  //   pieceNum: '3',
+  //   parts: [
+  //     { inst: instIdFromAbbrev('fl'), rank: 3 },
+  //     { inst: instIdFromAbbrev('pic'), rank: 2 },
+  //   ],
+  // });
+});
+
+test('should be able to break chunks up by slashes', () => {
+  const chunk1 = '3/pic2';
+  const chunk2 = '2/afl3/pic2';
+  const chunk3 = '4/afl';
+
+  expect(chunk1.split('/')).toEqual(['3', 'pic2']);
+  expect(chunk2.split('/')).toEqual(['2', 'afl3', 'pic2']);
+  expect(chunk3.split('/')).toEqual(['4', 'afl']);
+
+  // 3/pic2, 2/afl3/pic2'
+  // 3/pic, 4/afl
+
+  // [3,pic2], [2, afl3, pic2]
+  // [3, pic], [4, afl]
+});
+
+test('should make single part from either abbrev or abbrev with digit on end', () => {
+  const pic2 = 'pic2';
+  const eh3 = 'Eh3';
+  const cbn2 = 'cbn1';
+  const non4 = 'non4';
+  const onlyFlute = 'fl';
+  const onlyCl = 'cl';
+
+  const pic2Part = makePart(pic2);
+  const eh3Part = makePart(eh3);
+  const cbn2Part = makePart(cbn2);
+  const nonPart = makePart(non4);
+  const flPart = makePart(onlyFlute);
+  const clPart = makePart(onlyCl);
+
+  expect(pic2Part).toEqual({ inst: instIdFromAbbrev('pic'), rank: 2 });
+  expect(eh3Part).toEqual({ inst: instIdFromAbbrev('Eh'), rank: 3 });
+  expect(cbn2Part).toEqual({ inst: instIdFromAbbrev('cbn'), rank: 1 });
+  expect(nonPart).toEqual(undefined);
+  expect(flPart).toEqual({ inst: instIdFromAbbrev('fl'), rank: null });
+  expect(clPart).toEqual({ inst: instIdFromAbbrev('cl'), rank: null });
+
+
+
+})

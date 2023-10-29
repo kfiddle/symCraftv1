@@ -6,9 +6,16 @@ import { Chair, Part } from './rosterUtils';
 
 export const primaryWinds = insts.filter((inst) => ['flute', 'oboe', 'clarinet', 'bassoon'].includes(inst.name));
 export const primaryBrass = insts.filter((inst) => ['horn', 'trumpet', 'trombone', 'tuba'].includes(inst.name));
+4;
+
 export const instIdFromAbbrev = (abbrev) => {
   const matchingInst = insts.find((inst) => inst.abbreviation === abbrev);
   return matchingInst ? matchingInst.id : 0;
+};
+
+export const instFromAbbrev = (abbrev) => {
+  const matchingInst = insts.find((inst) => inst.abbreviation === abbrev);
+  return matchingInst ? matchingInst : 0;
 };
 
 export const makeChairsWithInstAndNum = (inst, num) => {
@@ -21,7 +28,7 @@ export const makeChairsWithInstAndNum = (inst, num) => {
 };
 
 //[3[1.2.pic], 3[1.2.Eh], 2, 4[1.2.3.cbn], 4,  5[1.2.3.crt1.crt2], 3,  1, tmp+3, 2hp, str]
-
+// 4[1.2.3/Pic.4/Af] 3[1.2.3/Eh] 3 4[1.2.3.4/Ctr] - 4331 - T4 - 2Hp - Cel - Str
 // const lib2 =
 //   '4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — backstage: 3tp, 4Wag tubas[2ten, 2bass] — tmp+4 — 3hp — cel, pf — str';
 // const lib3 = '4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — tmp+4 — 3hp — cel, pf — str';
@@ -66,23 +73,38 @@ export const extractWindsOrBrass = (windsLine) => {
   return resultsArray;
 };
 
-const makeChairsFromDblsOrExtras = (primaryInst, libChunk) => {
-  let chair = new Chair(new Part(primaryInst.id, libChunk[0]));
-  const partsArray = libChunk.split('/');
-  const endsWithDigit = /\w\d$/;
+//  3/pic2, cbn, pic2, 3/pic
 
-  for (let partString of partsArray.slice(1)) {
-    if (endsWithDigit.exec(partString)) {
-      const instId = instIdFromAbbrev(partString.slice(0, -1));
-      const rank = partString.slice(-1);
-      chair.add(new Part(instId, rank));
-    } else {
-      const instId = instIdFromAbbrev(partString);
-      chair.add(new Part(instId));
-    }
+//
+
+export const makePartFromNumOnEnd = (chunk) => {
+  let abbrev = chunk.slice(0, -1);
+  let lastChar = chunk[chunk.length - 1];
+  if (instIdFromAbbrev(abbrev) && isANumber(lastChar)) {
+    return new Part(instIdFromAbbrev(abbrev), lastChar);
   }
+  return undefined;
+};
 
-  return chair;
+// 3/pic2, 2/afl3/pic2'
+// 3/pic, 4/afl
+export const makeChairFromSlashes = (primaryInst, chunk) => {
+  const splitSlashes = chunk.split('/');
+
+  // [3,pic2], [2, afl3, pic2]
+  // [5, crn7, pic3, fl]
+  // [3, pic], [4, afl]
+
+  let createdChair = new Chair(new Part(primaryInst.id, splitSlashes[0]));
+  for (let part of splitSlashes.slice(1)) createdChair.add(makePart(part));
+
+  return createdChair;
+};
+
+export const makeChairSlashOrDigit = (primaryInst, chunk) => {
+  if (!chunk.includes('/')) return new Chair(makePart(chunk));
+  // else return makeChairFromSlashes(primaryInst, chunk);
+  // if the chunk inclides a /, send it off to extract doubling
 };
 
 // '1.2.3.Eh'
@@ -96,7 +118,9 @@ export const extractChairsFromSectionChunk = (primaryInst, chunk) => {
 
   for (let chairFrag of arrayOfChunks) {
     if (isANumber(chairFrag)) resultsArray.push(new Chair(new Part(primaryInst.id, chairFrag)));
-    else makeChairsFromDblsOrExtras(chairFrag);
+    if (instIdFromAbbrev(chairFrag)) resultsArray.push(new Chair(new Part(instIdFromAbbrev)));
+    // else resultsArray.push(makeChairSlashOrDigit(chairFrag))
+    // makeChairFromSlashOrDigit with chairFrag add this to resultsArray
   }
   return resultsArray;
 };
@@ -114,21 +138,14 @@ export const makeWindChairs = (windsArr) => {
 
 export const makeWindsFromNum = (index) => makeChairWithNum(primaryWinds[index], index);
 
-export const renderChairWithDoublings = (primaryInst, libChunk) => {
-  let chair = new Chair(new Part(primaryInst.id, libChunk[0]));
-  const partsArray = libChunk.split('/');
-  const endsWithDigit = /\w\d$/;
+export const makePart = (chunk) => {
+  let noDigit = instIdFromAbbrev(chunk);
+  let withDigit = instIdFromAbbrev(chunk.slice(0, -1));
 
-  for (let partString of partsArray.slice(1)) {
-    if (endsWithDigit.exec(partString)) {
-      const instId = instIdFromAbbrev(partString.slice(0, -1));
-      const rank = partString.slice(-1);
-      chair.add(new Part(instId, rank));
-    } else {
-      const instId = instIdFromAbbrev(partString);
-      chair.add(new Part(instId));
-    }
-  }
+  if (noDigit) return new Part(noDigit);
 
-  return chair;
+  let lastChar = chunk[chunk.length - 1];
+  if (withDigit && isANumber(lastChar)) return new Part(withDigit, lastChar);
+
+  return undefined;
 };
