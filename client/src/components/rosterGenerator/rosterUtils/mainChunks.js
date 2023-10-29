@@ -1,5 +1,18 @@
 const lib1 = '3[1.2.pic]  3[1.2.Eh]  2  4[1.2.3.cbn] — 4  5[1.2.3.crt1.crt2]  3  1 — tmp+3 — 2hp — str';
 
+import { isANumber } from '../../../utils/smallUtils';
+import { insts } from '../dummyInsts';
+import { Chair, Part } from './rosterUtils';
+
+const primaryWinds = insts.filter((inst) => ['flute', 'oboe', 'clarinet', 'bassoon'].includes(inst.name));
+const primaryBrass = insts.filter((inst) => ['horn', 'trumpet', 'trombone', 'tuba'].includes(inst.name));
+const chairsOnStage = [];
+
+export const makeChairsWithInstAndNum = (inst, num) => {
+  for (let seat = 1; seat <= num; seat++) chairsOnStage.push(new Chair(new Part(inst.id, seat)));
+  return chairsOnStage;
+};
+
 //[3[1.2.pic], 3[1.2.Eh], 2, 4[1.2.3.cbn], 4,  5[1.2.3.crt1.crt2], 3,  1, tmp+3, 2hp, str]
 
 // const lib2 =
@@ -24,9 +37,14 @@ export function mainChunks(originalLibLine) {
   return libLine;
 }
 
-export const extractWinds = (windsLine) => {
-  let resultsArray = [];
+// expect(extractWinds(windsLine)).toEqual([0, 0, 0, 0]);
+// expect(extractWinds(windsLine1)).toEqual([1, 1, 1, 1]);
+// expect(extractWinds(winds3)).toEqual(['1.2.pic', 2, 2, 2]);
+// expect(extractWinds(winds4)).toEqual(['1.2.pic', 2, '1.2.Eh', 3]);
+// expect(extractWinds(winds5)).toEqual(['1.2.pic', '1.2.Eh', 2, '1.2.3.cbn']);
 
+export const extractWindsOrBrass = (windsLine) => {
+  let resultsArray = [];
   let j = 0;
   while (j < windsLine.length) {
     if (windsLine[j + 1] === '[') {
@@ -41,4 +59,13 @@ export const extractWinds = (windsLine) => {
   return resultsArray;
 };
 
+// ['1.2.3/pic2.pic1',  '1.2.3.Eh',  '1.2.3/Ebcl.bcl', 4];
 
+export const makeWindChairs = (windsArr) => {
+  const resultChairs = [];
+  for (let index of windsArr) {
+    if (isANumber(index) && index > 0) resultChairs.push(makeChairWithNum(primaryWinds[index], index));
+  } else if ()
+};
+
+export const makeWindsFromNum = (index) => makeChairWithNum(primaryWinds[index], index);

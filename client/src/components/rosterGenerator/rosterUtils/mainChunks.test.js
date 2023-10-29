@@ -1,4 +1,5 @@
-import { mainChunks, extractWinds } from './mainChunks';
+import { insts } from '../dummyInsts';
+import { mainChunks, extractWindsOrBrass, makeWindsFromNum, makeChairsWithInstAndNum } from './mainChunks';
 
 test('main loop should return full array of chunks', () => {
   const lib0 = '3[1.2.pic] 2 2 2 - 4 4 4 4 ';
@@ -30,9 +31,15 @@ test('should be able to extract winds lines', () => {
   const winds4 = '3[1.2.pic]23[1.2.Eh]3';
   const winds5 = '3[1.2.pic]3[1.2.Eh]24[1.2.3.cbn]';
 
-  expect(extractWinds(windsLine)).toEqual([0, 0, 0, 0]);
-  expect(extractWinds(windsLine1)).toEqual([1, 1, 1, 1]);
-  expect(extractWinds(winds3)).toEqual(['1.2.pic', 2, 2, 2]);
-  expect(extractWinds(winds4)).toEqual(['1.2.pic', 2, '1.2.Eh', 3]);
-  expect(extractWinds(winds5)).toEqual(['1.2.pic', '1.2.Eh', 2, '1.2.3.cbn']);
+  expect(extractWindsOrBrass(windsLine)).toEqual([0, 0, 0, 0]);
+  expect(extractWindsOrBrass(windsLine1)).toEqual([1, 1, 1, 1]);
+  expect(extractWindsOrBrass(winds3)).toEqual(['1.2.pic', 2, 2, 2]);
+  expect(extractWindsOrBrass(winds4)).toEqual(['1.2.pic', 2, '1.2.Eh', 3]);
+  expect(extractWindsOrBrass(winds5)).toEqual(['1.2.pic', '1.2.Eh', 2, '1.2.3.cbn']);
+});
+
+test('should make seats given an inst and a number', () => {
+  let flute = insts[0];
+  const result = makeChairsWithInstAndNum(flute, 3);
+  expect(result.length).toEqual(3);
 });
