@@ -1,0 +1,21 @@
+'4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — tmp+4 — 3hp — cel, pf — str';
+
+give this to: 
+  getBiggestChunks()
+  returning ['4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1]', '4331', etc...]
+    take this array at the first index and pass it below
+    takes this array at the second index and also pass below;
+
+    extractWindsOrBrass( takes a string )
+    returning ['1.2.3/pic2.pic1',  '1.2.3.Eh',  '1.2.3/Ebcl.bcl',  '1.2.3/cbn2.cbn1'];
+
+      extractChairsFromSectionChunk() -> gives back final chairs by doing one of three things:
+
+                      pushing chairs directly by number or by abbrev
+                      giving leftovers to makeChairSlashesOrDigit()
+                                            returns either a new chair if no slash, or  
+                                                returns a chair from splitting and looping slashes
+
+      makePart() used when needed. creates chair from either abbrev, or abbrev with digit.
+
+      

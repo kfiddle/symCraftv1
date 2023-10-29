@@ -41,37 +41,6 @@ export const makeChairsWithInstAndNum = (inst, num) => {
 // 0123456789
 // 3[1.2.pic]     3[1.2.Eh]
 // expect(lib.slice(2, 9)).toEqual('1.2.pic');
-export function mainChunks(originalLibLine) {
-  const libLine = originalLibLine.replace(/\s+/g, '');
-  const matches = libLine.match(/[-—]/);
-  if (matches) {
-    const hyphenIndex = matches.index;
-    return libLine.slice(0, hyphenIndex);
-  }
-  return libLine;
-}
-
-// expect(extractWinds(windsLine)).toEqual([0, 0, 0, 0]);
-// expect(extractWinds(windsLine1)).toEqual([1, 1, 1, 1]);
-// expect(extractWinds(winds3)).toEqual(['1.2.pic', 2, 2, 2]);
-// expect(extractWinds(winds4)).toEqual(['1.2.pic', 2, '1.2.Eh', 3]);
-// expect(extractWinds(winds5)).toEqual(['1.2.pic', '1.2.Eh', 2, '1.2.3.cbn']);
-
-export const extractWindsOrBrass = (windsLine) => {
-  let resultsArray = [];
-  let j = 0;
-  while (j < windsLine.length) {
-    if (windsLine[j + 1] === '[') {
-      let closingBracketIndex = windsLine.slice(j).indexOf(']');
-      resultsArray.push(windsLine.slice(j + 2, j + closingBracketIndex));
-      j += closingBracketIndex;
-    } else {
-      resultsArray.push(parseInt(windsLine[j]));
-    }
-    j++;
-  }
-  return resultsArray;
-};
 
 //  3/pic2, cbn, pic2, 3/pic
 
@@ -88,42 +57,10 @@ export const makePartFromNumOnEnd = (chunk) => {
 
 // 3/pic2, 2/afl3/pic2'
 // 3/pic, 4/afl
-export const makeChairFromSlashes = (primaryInst, chunk) => {
-  const splitSlashes = chunk.split('/');
-
-  // [3,pic2], [2, afl3, pic2]
-  // [5, crn7, pic3, fl]
-  // [3, pic], [4, afl]
-
-  let createdChair = new Chair(new Part(primaryInst.id, splitSlashes[0]));
-  for (let part of splitSlashes.slice(1)) createdChair.add(makePart(part));
-
-  return createdChair;
-};
-
-export const makeChairSlashOrDigit = (primaryInst, chunk) => {
-  if (!chunk.includes('/')) return new Chair(makePart(chunk));
-  // else return makeChairFromSlashes(primaryInst, chunk);
-  // if the chunk inclides a /, send it off to extract doubling
-};
 
 // '1.2.3.Eh'
 // '1.2.3/pic2.pic1',  '1.2.3.Eh',  '1.2.3/Ebcl.bcl'
 // '1.2.3/Ebcl.bcl'  '1.2.3/cbn2.cbn1'
-
-export const extractChairsFromSectionChunk = (primaryInst, chunk) => {
-  let resultsArray = [];
-  const arrayOfChunks = chunk.split('.');
-  // [1, 2, 3, Eh] [1, 2, 3/pic2, pic1] [1, 2, 3/cbn2, cbn1];
-
-  for (let chairFrag of arrayOfChunks) {
-    if (isANumber(chairFrag)) resultsArray.push(new Chair(new Part(primaryInst.id, chairFrag)));
-    if (instIdFromAbbrev(chairFrag)) resultsArray.push(new Chair(new Part(instIdFromAbbrev)));
-    // else resultsArray.push(makeChairSlashOrDigit(chairFrag))
-    // makeChairFromSlashOrDigit with chairFrag add this to resultsArray
-  }
-  return resultsArray;
-};
 
 export const makeWindChairs = (windsArr) => {
   let resultsArray = [];
@@ -149,3 +86,108 @@ export const makePart = (chunk) => {
 
   return undefined;
 };
+
+export const makeChairFromSlashes = (primaryInst, chunk) => {
+  const splitSlashes = chunk.split('/');
+  let createdChair = new Chair(new Part(primaryInst.id, splitSlashes[0]));
+  for (let part of splitSlashes.slice(1)) createdChair.add(makePart(part));
+
+  return createdChair;
+};
+
+export const makeChairSlashesOrDigit = (primaryInst, chunk) => {
+  if (!chunk.includes('/')) return new Chair(makePart(chunk));
+  else {
+    const splitSlashes = chunk.split('/');
+    let createdChair = new Chair(new Part(primaryInst.id, splitSlashes[0]));
+    for (let part of splitSlashes.slice(1)) createdChair.add(makePart(part));
+    return createdChair;
+  }
+};
+
+export const extractChairsFromSectionChunk = (primaryInst, chunk) => {
+  let resultsArray = [];
+  const arrayOfChunks = chunk.split('.');
+
+  for (let chairFrag of arrayOfChunks) {
+    if (isANumber(chairFrag)) resultsArray.push(new Chair(new Part(primaryInst.id, chairFrag)));
+    else if (instIdFromAbbrev(chairFrag)) resultsArray.push(new Chair(new Part(instIdFromAbbrev)));
+    else resultsArray.push(makeChairSlashesOrDigit(primaryInst, chairFrag));
+  }
+  return resultsArray;
+};
+
+export const extractWindsOrBrass = (windsLine) => {
+  let resultsArray = [];
+  let j = 0;
+  while (j < windsLine.length) {
+    if (windsLine[j + 1] === '[') {
+      let closingBracketIndex = windsLine.slice(j).indexOf(']');
+      resultsArray.push(windsLine.slice(j + 2, j + closingBracketIndex));
+      j += closingBracketIndex;
+    } else {
+      resultsArray.push(parseInt(windsLine[j]));
+    }
+    j++;
+  }
+  return resultsArray;
+};
+
+export function mainChunks(originalLibLine) {
+  const libLine = originalLibLine.replace(/\s+/g, '');
+  const matches = libLine.match(/[-—]/);
+  if (matches) {
+    const hyphenIndex = matches.index;
+    return libLine.slice(0, hyphenIndex);
+  }
+  return libLine;
+}
+
+//'4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — backstage: 3tp, 4Wag tubas[2ten, 2bass] — tmp+4 — 3hp — cel, pf — str';
+
+//['4[1.2.3/pic2.pic1]4[1.2.3.Eh]4[1.2.3/Ebcl.bcl]4[1.2.3/cbn2.cbn1]', ['4,3,3,1'], ['backstage:3tp,4Wagtubas[2ten,2bass]—tmp+4—3hp—cel,pf—str'];
+
+// export function getBiggestChunks(originalLibLine) {
+//   const libLine = originalLibLine.replace(/\s+/g, '');
+//   const bigChunks = [];
+//   const windsEndIndex = libLine.match(/[-—]/).index;
+//   if (windsEndIndex) {
+//     bigChunks.push(libLine.slice(0, windsEndIndex));
+//     const brassEndIndex = libLine.slice(windsEndIndex + 1).match(/[-—]/).index;
+//     if (brassEndIndex) {
+//       console.log('brassEndIndex', brassEndIndex)
+//       bigChunks.push(libLine.slice(windsEndIndex + 1, brassEndIndex));
+//       console.log(bigChunks[1])
+//     }
+//     if (brassEndIndex < libLine.length) {
+//       bigChunks.push(libLine.slice(brassEndIndex + 1));
+//     }
+//   }
+//   return bigChunks;
+// }
+
+export function getBiggestChunks(originalLibLine) {
+  const libLine = originalLibLine.replace(/\s+/g, '');
+  const bigChunks = [];
+  
+  const hyphenIndex = libLine.search(/[-—]/);
+  
+  if (hyphenIndex !== -1) {
+    const firstPart = libLine.slice(0, hyphenIndex);
+    const remaining = libLine.slice(hyphenIndex + 1);
+    const secondHyphenIndex = remaining.search(/[-—]/);
+    
+    if (secondHyphenIndex !== -1) {
+      const secondPart = remaining.slice(0, secondHyphenIndex);
+      const thirdPart = remaining.slice(secondHyphenIndex + 1);
+      bigChunks.push(firstPart, secondPart, thirdPart);
+    } else {
+      bigChunks.push(firstPart, remaining);
+    }
+  } else {
+    bigChunks.push(libLine);
+  }
+  
+  return bigChunks;
+}
+

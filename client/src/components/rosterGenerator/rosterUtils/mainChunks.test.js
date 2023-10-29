@@ -1,6 +1,7 @@
 import { insts } from '../dummyInsts';
 import {
   mainChunks,
+  getBiggestChunks,
   extractWindsOrBrass,
   makeWindsFromNum,
   makeChairsWithInstAndNum,
@@ -14,6 +15,28 @@ import {
   instFromAbbrev,
 } from './mainChunks';
 import { instIdFromAbbrev } from './rosterUtils';
+
+//'4[1.2.3/pic2.pic1]4[1.2.3.Eh]4[1.2.3/Ebcl.bcl]4[1.2.3/cbn2.cbn1]—4331—backstage: 3tp, 4Wag tubas[2ten, 2bass] — tmp+4 — 3hp — cel, pf — str';
+
+test('should extract biggest chunks from full library string', () => {
+  const lib1 =
+    '4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — backstage: 3tp, 4Wag tubas[2ten, 2bass] — tmp+4 — 3hp — cel, pf — str';
+  const lib2 = '4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — tmp+4 — 3hp — cel, pf — str';
+
+  const lib3 = '3[1.2.pic]  3[1.2.Eh]  2  4[1.2.3.cbn] — 4  5[1.2.3.crt1.crt2]  3  1 — tmp+3 — 2hp — str';
+  const lib1Chunks = getBiggestChunks(lib1);
+  const lib2Chunks = getBiggestChunks(lib2);
+  const lib3Chunks = getBiggestChunks(lib3);
+
+  expect(lib1Chunks).toEqual([
+    '4[1.2.3/pic2.pic1]4[1.2.3.Eh]4[1.2.3/Ebcl.bcl]4[1.2.3/cbn2.cbn1]',
+    '4331',
+    'backstage:3tp,4Wagtubas[2ten,2bass]—tmp+4—3hp—cel,pf—str',
+  ]);
+
+  expect(lib2Chunks).toEqual(['4[1.2.3/pic2.pic1]4[1.2.3.Eh]4[1.2.3/Ebcl.bcl]4[1.2.3/cbn2.cbn1]', '4331', 'tmp+4—3hp—cel,pf—str']);
+  expect(lib3Chunks).toEqual(['3[1.2.pic]3[1.2.Eh]24[1.2.3.cbn]', '45[1.2.3.crt1.crt2]31', 'tmp+3—2hp—str']);
+});
 
 test('main loop should return full array of chunks', () => {
   const lib0 = '3[1.2.pic] 2 2 2 - 4 4 4 4 ';
@@ -156,7 +179,60 @@ test('should make single part from either abbrev or abbrev with digit on end', (
   expect(nonPart).toEqual(undefined);
   expect(flPart).toEqual({ inst: instIdFromAbbrev('fl'), rank: null });
   expect(clPart).toEqual({ inst: instIdFromAbbrev('cl'), rank: null });
+});
 
+test('make chair from chunk with slashes', () => {
+  const primaryFl = { id: 'fluteId' };
 
+  const chunk1 = '3/pic2';
+  const chunk2 = '2/afl3/pic2';
+  const chunk3 = '5/crt7/pic3/fl';
+  const chunk4 = '4/afl';
 
-})
+  const chair1 = makeChairFromSlashes(primaryFl, chunk1);
+  const chair2 = makeChairFromSlashes(primaryFl, chunk2);
+  const chair3 = makeChairFromSlashes(primaryFl, chunk3);
+  const chair4 = makeChairFromSlashes(primaryFl, chunk4);
+
+  expect(chair1).toEqual({
+    gig: '12',
+    pieceNum: '3',
+    parts: [
+      { inst: 'fluteId', rank: 3 },
+      { inst: instIdFromAbbrev('pic'), rank: 2 },
+    ],
+  });
+
+  expect(chair2).toEqual({
+    gig: '12',
+    pieceNum: '3',
+    parts: [
+      { inst: 'fluteId', rank: 2 },
+      { inst: instIdFromAbbrev('afl'), rank: 3 },
+      { inst: instIdFromAbbrev('pic'), rank: 2 },
+    ],
+  });
+
+  // '5/crt7/pic3/fl';
+
+  expect(chair3).toEqual({
+    gig: '12',
+    pieceNum: '3',
+    parts: [
+      { inst: 'fluteId', rank: 5 },
+      { inst: instIdFromAbbrev('crt'), rank: 7 },
+      { inst: instIdFromAbbrev('pic'), rank: 3 },
+      { inst: instIdFromAbbrev('fl'), rank: null },
+    ],
+  });
+
+  // '4/afl'
+  expect(chair4).toEqual({
+    gig: '12',
+    pieceNum: '3',
+    parts: [
+      { inst: 'fluteId', rank: 4 },
+      { inst: instIdFromAbbrev('afl'), rank: null },
+    ],
+  });
+});
