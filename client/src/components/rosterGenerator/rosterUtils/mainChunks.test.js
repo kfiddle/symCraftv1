@@ -1,5 +1,14 @@
 import { insts } from '../dummyInsts';
-import { mainChunks, extractWindsOrBrass, makeWindsFromNum, makeChairsWithInstAndNum } from './mainChunks';
+import {
+  mainChunks,
+  extractWindsOrBrass,
+  makeWindsFromNum,
+  makeChairsWithInstAndNum,
+  primaryWinds,
+  primaryBrass,
+  makeWindChairs,
+  extractChairsFromSectionChunk,
+} from './mainChunks';
 
 test('main loop should return full array of chunks', () => {
   const lib0 = '3[1.2.pic] 2 2 2 - 4 4 4 4 ';
@@ -41,5 +50,25 @@ test('should be able to extract winds lines', () => {
 test('should make seats given an inst and a number', () => {
   let flute = insts[0];
   const result = makeChairsWithInstAndNum(flute, 3);
+  const result1 = makeChairsWithInstAndNum(flute, 4);
   expect(result.length).toEqual(3);
+  expect(result1.length).toEqual(4);
+});
+
+test('should make wind chairs of full wind section from number', () => {
+  let windLine = [1, 1, 1, 1];
+  let winds2 = [20, 20, 20, 20];
+  const result = makeWindChairs(windLine);
+  const result2 = makeWindChairs(winds2);
+  expect(result.length).toEqual(4);
+  expect(result2.length).toEqual(80);
+});
+
+// '1.2.3.Eh'
+// '1.2.3/pic2.pic1',  '1.2.3.Eh',  '1.2.3/Ebcl.bcl'
+// '1.2.3/Ebcl.bcl'  '1.2.3/cbn2.cbn1'
+test('should make sections of winds from string', () => {
+  const string1 = '1.2.3.Eh';
+  const results = extractChairsFromSectionChunk(insts[0], string1);
+  expect(results.length).toEqual(3)
 });

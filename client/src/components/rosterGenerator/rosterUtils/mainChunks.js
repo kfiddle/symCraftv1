@@ -4,12 +4,19 @@ import { isANumber } from '../../../utils/smallUtils';
 import { insts } from '../dummyInsts';
 import { Chair, Part } from './rosterUtils';
 
-const primaryWinds = insts.filter((inst) => ['flute', 'oboe', 'clarinet', 'bassoon'].includes(inst.name));
-const primaryBrass = insts.filter((inst) => ['horn', 'trumpet', 'trombone', 'tuba'].includes(inst.name));
-const chairsOnStage = [];
+export const primaryWinds = insts.filter((inst) => ['flute', 'oboe', 'clarinet', 'bassoon'].includes(inst.name));
+export const primaryBrass = insts.filter((inst) => ['horn', 'trumpet', 'trombone', 'tuba'].includes(inst.name));
+export const instIdFromAbbrev = (abbrev) => {
+  const matchingInst = insts.find((inst) => inst.abbreviation === abbrev);
+  return matchingInst ? matchingInst.id : 0;
+};
 
 export const makeChairsWithInstAndNum = (inst, num) => {
-  for (let seat = 1; seat <= num; seat++) chairsOnStage.push(new Chair(new Part(inst.id, seat)));
+  const chairsOnStage = [];
+  for (let seat = 1; seat <= num; seat++) {
+    chairsOnStage.push(new Chair(new Part(inst.id, seat)));
+  }
+
   return chairsOnStage;
 };
 
@@ -59,13 +66,69 @@ export const extractWindsOrBrass = (windsLine) => {
   return resultsArray;
 };
 
-// ['1.2.3/pic2.pic1',  '1.2.3.Eh',  '1.2.3/Ebcl.bcl', 4];
+const makeChairsFromDblsOrExtras = (primaryInst, libChunk) => {
+  let chair = new Chair(new Part(primaryInst.id, libChunk[0]));
+  const partsArray = libChunk.split('/');
+  const endsWithDigit = /\w\d$/;
+
+  for (let partString of partsArray.slice(1)) {
+    if (endsWithDigit.exec(partString)) {
+      const instId = instIdFromAbbrev(partString.slice(0, -1));
+      const rank = partString.slice(-1);
+      chair.add(new Part(instId, rank));
+    } else {
+      const instId = instIdFromAbbrev(partString);
+      chair.add(new Part(instId));
+    }
+  }
+
+  return chair;
+};
+
+// '1.2.3.Eh'
+// '1.2.3/pic2.pic1',  '1.2.3.Eh',  '1.2.3/Ebcl.bcl'
+// '1.2.3/Ebcl.bcl'  '1.2.3/cbn2.cbn1'
+
+export const extractChairsFromSectionChunk = (primaryInst, chunk) => {
+  let resultsArray = [];
+  const arrayOfChunks = chunk.split('.');
+  // [1, 2, 3, Eh] [1, 2, 3/pic2, pic1] [1, 2, 3/cbn2, cbn1];
+
+  for (let chairFrag of arrayOfChunks) {
+    if (isANumber(chairFrag)) resultsArray.push(new Chair(new Part(primaryInst.id, chairFrag)));
+    else makeChairsFromDblsOrExtras(chairFrag);
+  }
+  return resultsArray;
+};
 
 export const makeWindChairs = (windsArr) => {
-  const resultChairs = [];
-  for (let index of windsArr) {
-    if (isANumber(index) && index > 0) resultChairs.push(makeChairWithNum(primaryWinds[index], index));
-  } else if ()
+  let resultsArray = [];
+  windsArr.forEach((chunk, index) => {
+    let primaryInst = primaryWinds[index];
+    if (isANumber(chunk) && chunk > 0) resultsArray = [...resultsArray, ...makeChairsWithInstAndNum(primaryInst, chunk)];
+    // else if (instIdFromAbbrev(chunk)) resultsArray.push(new Chair(new Part(instIdFromAbbrev(chunk))));
+    else extractChairsFromSectionChunk(primaryInst, chunk);
+  });
+  return resultsArray;
 };
 
 export const makeWindsFromNum = (index) => makeChairWithNum(primaryWinds[index], index);
+
+export const renderChairWithDoublings = (primaryInst, libChunk) => {
+  let chair = new Chair(new Part(primaryInst.id, libChunk[0]));
+  const partsArray = libChunk.split('/');
+  const endsWithDigit = /\w\d$/;
+
+  for (let partString of partsArray.slice(1)) {
+    if (endsWithDigit.exec(partString)) {
+      const instId = instIdFromAbbrev(partString.slice(0, -1));
+      const rank = partString.slice(-1);
+      chair.add(new Part(instId, rank));
+    } else {
+      const instId = instIdFromAbbrev(partString);
+      chair.add(new Part(instId));
+    }
+  }
+
+  return chair;
+};
