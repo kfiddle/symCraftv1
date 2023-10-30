@@ -29,20 +29,20 @@ const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
   };
 
   return (
-    <div className={styles.dropdown}>
+    <div>
       <div
-        className={`${styles.outerHamburger} ${styles.dropdown}`}
+        className={styles.outerHamburger}
         onMouseEnter={hovered(true)}
         onMouseLeave={hovered(false)}
         onClick={clicker}
       >
         {/* <div className={styles.centeringBox}> */}
-        <div className={`${styles.centeringBox} ${styles.dropdown}`}>
+        <div className={styles.centeringBox}>
           <span className={stripeMover(1)}></span>
           <span className={stripeMover(2)}></span>
           <span className={stripeMover(3)}></span>
         </div>
-        <div className={styles.dropdown}>
+        <div>
           {clicked && <Dropdown className={styles.dropdown} styles={styles} />}
         </div>
       </div>

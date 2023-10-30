@@ -70,4 +70,11 @@
 .dropdown {
   display: flex;
   flex-direction: column;
+  position: absolute;
+  top: 5rem;
+  left: 0;
+  justify-content: left;
+  padding: 10px;
+  background-color: #f3f1f1;
+  box-shadow: 3px 3px 10px #d3d3d3;
 }

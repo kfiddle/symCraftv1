@@ -3,57 +3,53 @@ import styles from '../Header.module.css';
 
 const DropdownNav = () => {
   return (
-    <div>
-      <ul className={styles.dropdown}>
-        <li className={styles.navItem}>
-          <NavLink
-            to={'/dashboard'}
-            className={({ isActive }) =>
-              isActive ? styles.active : styles.inActive
-            }
-            // onClick={closeSideBar}
-            // activeClassName={styles.active}
-          >
-            {' '}
-            Dashboard
-          </NavLink>
-        </li>
-        <li className={styles.navItem}>
-          <NavLink
-            to={'/notices'}
-            // onClick={closeSideBar}
-            className={({ isActive }) =>
-              isActive ? styles.active : styles.inActive
-            }
-          >
-            NOTICES
-          </NavLink>
-        </li>
-
-        <li className={styles.navItem}>
-          <NavLink
-            to={'library'}
-            // onClick={closeSideBar}
-            className={({ isActive }) =>
-              isActive ? styles.active : styles.inActive
-            }
-          >
-            Library
-          </NavLink>
-        </li>
-
-        <li className={styles.navItem}>
-          <NavLink
-            to={'/subs'}
-            // onClick={closeSideBar}
-            className={({ isActive }) =>
-              isActive ? styles.active : styles.inActive
-            }
-          >
-            Subs
-          </NavLink>
-        </li>
-      </ul>
+    <div className={styles.dropdwon}>
+      <nav>
+        <NavLink
+          to={'/dashboard'}
+          className={({ isActive }) =>
+            isActive ? styles.active : styles.inActive
+          }
+          // onClick={closeSideBar}
+          // activeClassName={styles.active}
+        >
+          {' '}
+          Dashboard
+        </NavLink>
+      </nav>
+      <nav>
+        <NavLink
+          to={'/notices'}
+          // onClick={closeSideBar}
+          className={({ isActive }) =>
+            isActive ? styles.active : styles.inActive
+          }
+        >
+          Notics
+        </NavLink>
+      </nav>
+      <nav>
+        <NavLink
+          to={'library'}
+          // onClick={closeSideBar}
+          className={({ isActive }) =>
+            isActive ? styles.active : styles.inActive
+          }
+        >
+          Library
+        </NavLink>
+      </nav>
+      <nav>
+        <NavLink
+          to={'/subs'}
+          // onClick={closeSideBar}
+          className={({ isActive }) =>
+            isActive ? styles.active : styles.inActive
+          }
+        >
+          Subs
+        </NavLink>
+      </nav>
     </div>
   );
 };

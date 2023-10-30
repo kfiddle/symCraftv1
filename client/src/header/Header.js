@@ -12,53 +12,11 @@ const Header = ({ stripesHandler, setSideBarOpen }) => {
     <header className={styles.header}>
       <div className={styles.logoDiv}>
         {/* <HamburgerMenu stripesHandler={stripesHandler} sideBarOpen={props.sideBarOpen} /> */}
-        <HamburgerMenu  />
-        <h1>SymCraft</h1>
+        <HamburgerMenu />
+        <NavLink to={'/dashboard'}>
+          <h1 className={styles.inActive}>SymCraft</h1>
+        </NavLink>
       </div>
-      <nav className={styles.nav}>
-        <ul>
-          <li className={styles.navItem}>
-            <NavLink
-              to={'/dashboard'}
-              className={({ isActive }) => (isActive ? styles.active : styles.inActive)}
-              // onClick={closeSideBar}
-              // activeClassName={styles.active}
-            >
-              {' '}
-              Dashboard
-            </NavLink>
-          </li>
-          <li className={styles.navItem}>
-            <NavLink
-              to={'/notices'}
-              // onClick={closeSideBar}
-              className={({ isActive }) => (isActive ? styles.active : styles.inActive)}
-            >
-              NOTICES
-            </NavLink>
-          </li>
-
-          <li className={styles.navItem}>
-            <NavLink
-              to={'library'}
-              // onClick={closeSideBar}
-              className={({ isActive }) => (isActive ? styles.active : styles.inActive)}
-            >
-              Library
-            </NavLink>
-          </li>
-
-          <li className={styles.navItem}>
-            <NavLink
-              to={'/subs'}
-              // onClick={closeSideBar}
-              className={({ isActive }) => (isActive ? styles.active : styles.inActive)}
-            >
-              Subs
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
     </header>
   );
 };
