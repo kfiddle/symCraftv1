@@ -2,15 +2,20 @@
   margin-top: 8rem;
   height: calc(100vh - 8rem);
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1fr 1.5fr;
 }
 
 .leftBox {
   border: 1px solid black;
 }
 
+.centerBox {
+  border: 1px solid black;
+}
+
 .rightBox {
   border: 1px solid black;
+  /* padding: 1rem; */
 }
 
 .instsBox {

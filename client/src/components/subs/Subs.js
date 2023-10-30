@@ -16,12 +16,12 @@ const Subs = () => {
 
   useEffect(() => {
     const getPlayersOfInst = async () => {
-      const url = `${process.env.REACT_APP_SERVER}players/inst_id/${clickedInst.id}`
+      const url = `${process.env.REACT_APP_SERVER}players/inst_id/${clickedInst.id}`;
       try {
         const response = await fetch(url);
         if (response.ok) {
           const jsonified = await response.json();
-          setSubsOfInst(jsonified)
+          setSubsOfInst(jsonified);
         }
       } catch (err) {
         console.log(err);
@@ -37,7 +37,6 @@ const Subs = () => {
       ? insts.map((inst) => <Inst key={inst.id} inst={inst} clicker={clickedInstHandler} isClicked={inst === clickedInst} />)
       : [];
 
-
   // let displayableSubs = [];
   // if (clickedInst) {
   //   if (clickedInst.players) displayableInsts = clickedInst.players.map((player) => <div key={player}>{player}</div>);
@@ -50,7 +49,12 @@ const Subs = () => {
         <div className={styles.instsBox}>{displayableInsts}</div>
       </div>
 
-      <div className={styles.rightBox}>{clickedInst && <SubsOfInst players={subsOfInst} />}</div>
+      <div className={styles.centerBox}>
+        <Input placeholder="Enter Player" />
+
+        {clickedInst && <SubsOfInst players={subsOfInst} />}
+      </div>
+      <div className={styles.rightBox}></div>
     </div>
   );
 };
