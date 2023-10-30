@@ -2,19 +2,22 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import Input from '../../UI/input/Input';
-import Piece from './piece/Piece';
+import Piece from './pieces/piece/Piece';
 
-import styles from './Library.module.css';
+import styles from './LibraryView.module.css';
 import PieceDetails from './pieceDetails/PieceDetails';
 
 const Library = () => {
+  const { allPieces: pieces } = useSelector((state) => state.pieces);
   const [library, setLibrary] = useState([]);
   const [clickedPiece, setClickedPiece] = useState({});
-  const { allPieces: pieces } = useSelector((state) => state.pieces);
+  const [searchText, setSearchTest] = useState('');
 
-  const clickedPieceHandler = (pieceId) => {
-    setClickedPiece(pieces.find((piece) => piece.id === pieceId));
-  };
+
+  const clickedPieceHandler = (pieceId) => setClickedPiece(pieces.find((piece) => piece.id === pieceId));
+  
+  const inputHandler = (e) => setSearchTest(e.target.value);
+
 
   let displayablePieces =
     pieces.length > 0

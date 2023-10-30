@@ -12,9 +12,9 @@ import { gigsActions } from './redux-store/gigs';
 
 import './App.css';
 import Layout from './UI/Layout';
-import Library from './components/library/Library';
+import Library from './components/library/LibraryView';
 import Dashboard from './components/dashboard/Dashboard';
-import Subs from './components/subs/Subs';
+import Subs from './components/subs/SubsView';
 import Notices from './components/notices/Notices';
 
 

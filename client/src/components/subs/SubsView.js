@@ -1,14 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 
-import Inst from './inst/Inst';
+import Inst from './insts/inst/Inst';
 import Input from '../../UI/input/Input';
 import fetchGet from '../../utils/fetchGet';
 
-import Insts from './Insts';
+import Insts from './insts/Insts';
 import SubsOfInst from './subsOfInst/SubsOfInst';
 
-import styles from './Subs.module.css';
+import styles from './SubsView.module.css';
 
 const Subs = () => {
   const { allInsts: insts } = useSelector((state) => state.insts);
