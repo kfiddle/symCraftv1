@@ -1,7 +1,7 @@
-import { isANumber } from '../../../utils/smallUtils';
+import { isANumber, loopFromOne } from '../../../utils/smallUtils';
 
 const RosterLoop = (rosterDetails) => {
-  const { insts, originalLibLine, gigId, pieceNum } = rosterDetails;
+  const { insts, originalLibLine, gigId, pieceNum, strSections } = rosterDetails;
 
   class Part {
     constructor(instId, rank) {
@@ -23,6 +23,11 @@ const RosterLoop = (rosterDetails) => {
 
   const instIdFromAbbrev = (abbrev) => {
     const matchingInst = insts.find((inst) => inst.abbreviation === abbrev);
+    return matchingInst ? matchingInst.id : 0;
+  };
+
+  const instIdFromName = (name) => {
+    const matchingInst = insts.find((inst) => inst.abbreviation === name);
     return matchingInst ? matchingInst.id : 0;
   };
 
@@ -121,23 +126,42 @@ const RosterLoop = (rosterDetails) => {
     return bigChunks;
   };
 
+  const addStrChairs = () => {
+    let resultChairs = [];
+    for (let section in strSections) {
+      let seats = strSections[section];
+      loopFromOne(seats, (seat) => {
+        let instId = instIdFromName(section)
+        resultChairs.push(new Chair(new Part(instId, seat)));
+      });
+    }
+    return resultChairs;
+  };
+
   const primaryWinds = insts.filter((inst) => ['flute', 'oboe', 'clarinet', 'bassoon'].includes(inst.name));
   const primaryBrass = insts.filter((inst) => ['horn', 'trumpet', 'trombone', 'tuba'].includes(inst.name));
 
-  const windBrassElseChunks = getBiggestChunks(originalLibLine);
+  try {
+    const windBrassElseChunks = getBiggestChunks(originalLibLine);
 
-  const windsLine = windBrassElseChunks[0];
-  const brassLine = windBrassElseChunks[1];
-  const allElse = windBrassElseChunks[2];
+    const windsLine = windBrassElseChunks[0];
+    const brassLine = windBrassElseChunks[1];
+    const allElse = windBrassElseChunks[2];
 
-  const windsArr = extractWindsOrBrass(windsLine);
-  const brassArr = extractWindsOrBrass(brassLine);
+    const windsArr = extractWindsOrBrass(windsLine);
+    const brassArr = extractWindsOrBrass(brassLine);
 
-  const windsChairs = windsArr.map((_, j) => extractChairsFromSectionChunk(primaryWinds[j], windsArr[j])).flat();
-  const brassChairs = brassArr.map((_, j) => extractChairsFromSectionChunk(primaryBrass[j], brassArr[j])).flat();
-  const allChairs = [...windsChairs, ...brassChairs];
+    const windsChairs = windsArr.map((_, j) => extractChairsFromSectionChunk(primaryWinds[j], windsArr[j])).flat();
+    const brassChairs = brassArr.map((_, j) => extractChairsFromSectionChunk(primaryBrass[j], brassArr[j])).flat();
+    const strChairs = originalLibLine.toLowerCase().includes('str') ? addStrChairs() : []; 
+    
+    let allChairs = [...windsChairs, ...brassChairs, ...strChairs];
 
-  return allChairs;
+    return allChairs;
+  } catch (err) {
+    // return { err: 'unable to generate chairs from this orchestration' };
+    console.log(err)
+  }
 };
 
 export default RosterLoop;

@@ -32,20 +32,28 @@ const Roster = () => {
 
   const clicker = () => {
     let originalLibLine = '1111 - 1111 str';
-    let testLine1 = '4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — backstage: 3tp, 4Wag tubas[2ten, 2bass] — tmp+4 — 3hp — cel, pf — str';
+    let testLine1 =
+      '4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — backstage: 3tp, 4Wag tubas[2ten, 2bass] — tmp+4 — 3hp — cel, pf — str';
 
-    let gigId = '65393aa333e925b8e809a5ff';
+    let testLine2 = '4[1.2.3/pic2.pic1]  4[1.2.3.Eh]  4[1.2.3/Ebcl.bcl]  4[1.2.3/cbn2.cbn1] — 4  3  3  1 — tmp+4 — 3hp — cel, pf — str';
+    let testLine3 = '3[1.2.pic]  2  2  2 — 4  4[2tp, 2crt]  3  1 — tmp+3 — hp — str';
+    let testLine4 = '2  2  2  2 — 2  2  0  0 — tmp — str';
+
+    let gigId = '65392a0e8aa03f88ba86d6ae';
     const strSections = { violin1: 12, violin2: 12, viola: 8, cello: 8, bass: 6 };
     const allRosterDetails = {
       insts,
-      originalLibLine : testLine1,
+      originalLibLine: testLine4,
       gigId,
-      pieceNum: 1,
+      pieceNum: 3,
       strSections,
     };
-    // const resultChairs = RosterGenerator(allRosterDetails);
-    const resultChairs = RosterLoop(allRosterDetails);
-    console.log(resultChairs)
+    try {
+      const resultChairs = RosterLoop(allRosterDetails);
+      console.log(resultChairs);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

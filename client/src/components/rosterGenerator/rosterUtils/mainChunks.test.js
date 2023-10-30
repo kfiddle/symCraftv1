@@ -123,25 +123,6 @@ test('should create part from an abbrev with a digit', () => {
 // this.pieceNum = '3';
 
 // 3/pic2, pic1, 2/alt3/pic2'
-test('should make doublings from slashes', () => {
-  const flute = { id: 'flute' };
-  const one = '3/pic2';
-  const two = 'pic1';
-  const three = '2/alt3/pic2';
-
-  // const chair1 = makeChairFromSlashes(flute, one);
-  // const chair2 = makeChairFromSlashes(flute, two);
-  // const chair3 = makeChairFromSlashes(flute, three);
-
-  // expect(chair1).toEqual({
-  //   gig: '12',
-  //   pieceNum: '3',
-  //   parts: [
-  //     { inst: instIdFromAbbrev('fl'), rank: 3 },
-  //     { inst: instIdFromAbbrev('pic'), rank: 2 },
-  //   ],
-  // });
-});
 
 test('should be able to break chunks up by slashes', () => {
   const chunk1 = '3/pic2';
