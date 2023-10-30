@@ -12,6 +12,7 @@ import {
   makePartFromNumOnEnd,
   makePart,
   makeChairFromSlashes,
+  makeChairSlashesOrDigit,
   instFromAbbrev,
 } from './mainChunks';
 import { instIdFromAbbrev } from './rosterUtils';
@@ -189,10 +190,10 @@ test('make chair from chunk with slashes', () => {
   const chunk3 = '5/crt7/pic3/fl';
   const chunk4 = '4/afl';
 
-  const chair1 = makeChairFromSlashes(primaryFl, chunk1);
-  const chair2 = makeChairFromSlashes(primaryFl, chunk2);
-  const chair3 = makeChairFromSlashes(primaryFl, chunk3);
-  const chair4 = makeChairFromSlashes(primaryFl, chunk4);
+  const chair1 = makeChairSlashesOrDigit(primaryFl, chunk1);
+  const chair2 = makeChairSlashesOrDigit(primaryFl, chunk2);
+  const chair3 = makeChairSlashesOrDigit(primaryFl, chunk3);
+  const chair4 = makeChairSlashesOrDigit(primaryFl, chunk4);
 
   expect(chair1).toEqual({
     gig: '12',

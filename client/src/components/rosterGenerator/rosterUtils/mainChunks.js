@@ -1,4 +1,3 @@
-const lib1 = '3[1.2.pic]  3[1.2.Eh]  2  4[1.2.3.cbn] — 4  5[1.2.3.crt1.crt2]  3  1 — tmp+3 — 2hp — str';
 
 import { isANumber } from '../../../utils/smallUtils';
 import { insts } from '../dummyInsts';
@@ -6,7 +5,7 @@ import { Chair, Part } from './rosterUtils';
 
 export const primaryWinds = insts.filter((inst) => ['flute', 'oboe', 'clarinet', 'bassoon'].includes(inst.name));
 export const primaryBrass = insts.filter((inst) => ['horn', 'trumpet', 'trombone', 'tuba'].includes(inst.name));
-4;
+
 
 export const instIdFromAbbrev = (abbrev) => {
   const matchingInst = insts.find((inst) => inst.abbreviation === abbrev);
@@ -87,13 +86,13 @@ export const makePart = (chunk) => {
   return undefined;
 };
 
-export const makeChairFromSlashes = (primaryInst, chunk) => {
-  const splitSlashes = chunk.split('/');
-  let createdChair = new Chair(new Part(primaryInst.id, splitSlashes[0]));
-  for (let part of splitSlashes.slice(1)) createdChair.add(makePart(part));
+// export const makeChairFromSlashes = (primaryInst, chunk) => {
+//   const splitSlashes = chunk.split('/');
+//   let createdChair = new Chair(new Part(primaryInst.id, splitSlashes[0]));
+//   for (let part of splitSlashes.slice(1)) createdChair.add(makePart(part));
 
-  return createdChair;
-};
+//   return createdChair;
+// };
 
 export const makeChairSlashesOrDigit = (primaryInst, chunk) => {
   if (!chunk.includes('/')) return new Chair(makePart(chunk));
@@ -106,7 +105,9 @@ export const makeChairSlashesOrDigit = (primaryInst, chunk) => {
 };
 
 export const extractChairsFromSectionChunk = (primaryInst, chunk) => {
-  let resultsArray = [];
+  if (isANumber(chunk)) return makeChairsWithInstAndNum(primaryInst, chunk);
+
+  let resultsArray  = [];
   const arrayOfChunks = chunk.split('.');
 
   for (let chairFrag of arrayOfChunks) {
