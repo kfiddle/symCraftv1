@@ -11,13 +11,13 @@ import SubsOfInst from './subsOfInst/SubsOfInst';
 import styles from './Subs.module.css';
 
 const Subs = () => {
-  const { allInsts: initialInsts } = useSelector((state) => state.insts);
+  const { allInsts: insts } = useSelector((state) => state.insts);
 
   const [clickedInst, setClickedInst] = useState(null);
   const [subsOfInst, setSubsOfInst] = useState([]);
   const [searchText, setSearchTest] = useState('');
 
-  const [insts, setInsts] = useState([]);
+  // const [insts, setInsts] = useState([]);
 
   useEffect(() => {
     const getPlayersOfInst = async () => {
@@ -26,29 +26,26 @@ const Subs = () => {
     };
     if (clickedInst) getPlayersOfInst();
 
-    setInsts(initialInsts);
+    // setInsts(initialInsts);
 
-    // if (inputVal !== '') {
-
-    // }
-  }, [clickedInst, inputVal]);
+  }, [clickedInst, searchText]);
 
   const clickedInstHandler = (instId) => setClickedInst(insts.find((inst) => inst.id === instId));
 
-  const inputHandler = (e) => setInputVal(e.target.value);
+  const inputHandler = (e) => setSearchTest(e.target.value);
 
-  let displayableInsts =
-    insts.length > 0
-      ? insts.map((inst) => <Inst key={inst.id} inst={inst} clicker={clickedInstHandler} isClicked={inst === clickedInst} />)
-      : [];
+  // let displayableInsts =
+  //   insts.length > 0
+  //     ? insts.map((inst) => <Inst key={inst.id} inst={inst} clicker={clickedInstHandler} isClicked={inst === clickedInst} />)
+  //     : [];
 
   return (
     <div className={styles.outerContainer}>
       <div className={styles.leftBox}>
         <Input placeholder="Enter Instrument" onChangeHandler={inputHandler} />
         <div className={styles.instsBox}>
-          {displayableInsts}
-          <Insts insts={insts} clicker={clickedInstHandler} clickedInst={clickedInst} />
+          {/* {displayableInsts} */}
+          <Insts insts={insts} searchText={searchText} clicker={clickedInstHandler} clickedInst={clickedInst} />
         </div>
       </div>
 

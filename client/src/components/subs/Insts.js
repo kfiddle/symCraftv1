@@ -1,19 +1,17 @@
+import { Fragment } from 'react';
+import Inst from './inst/Inst';
 
-import Inst from "./inst/Inst";
+const Insts = ({ insts, searchText, clicker, clickedInst }) => {
 
-const Insts = ({ insts, searchText }) => {
-
-  const filteredInsts = insts.filter((name) =>
-    name.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const filteredInsts = searchText ? insts.filter((inst) => inst.name.toLowerCase().includes(searchText.toLowerCase())) : insts;
 
   return (
-    <ul>
+    <Fragment>
       {filteredInsts.map((inst) => (
-      <Inst key={inst.id} inst={inst} clicker={clickedInstHandler} isClicked={inst === clickedInst} />
+        <Inst key={inst.id} inst={inst} clicker={clicker} isClicked={inst === clickedInst} />
       ))}
-    </ul>
+    </Fragment>
   );
-}
+};
 
 export default Insts;
