@@ -66,3 +66,8 @@
 .clickedBar3 {
   transform: rotate(-45deg) translateY(-9px);
 }
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+}

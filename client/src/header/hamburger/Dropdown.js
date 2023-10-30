@@ -1,8 +1,8 @@
 import DropdownNav from './DropdownNav';
 
-const Dropdown = () => {
+const Dropdown = (props) => {
   return (
-    <div>
+    <div className={props.styles.dropdown}>
       <DropdownNav />
     </div>
   );

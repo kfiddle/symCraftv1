@@ -4,7 +4,7 @@ import styles from '../Header.module.css';
 const DropdownNav = () => {
   return (
     <div>
-      <ul>
+      <ul className={styles.dropdown}>
         <li className={styles.navItem}>
           <NavLink
             to={'/dashboard'}

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import styles from './HamburgerMenu.module.css';
 import Dropdown from './Dropdown';
 
@@ -30,18 +29,23 @@ const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
   };
 
   return (
-    <div
-      className={styles.outerHamburger}
-      onMouseEnter={hovered(true)}
-      onMouseLeave={hovered(false)}
-      onClick={clicker}
-    >
-      <div className={styles.centeringBox}>
-        <span className={stripeMover(1)}></span>
-        <span className={stripeMover(2)}></span>
-        <span className={stripeMover(3)}></span>
+    <div className={styles.dropdown}>
+      <div
+        className={`${styles.outerHamburger} ${styles.dropdown}`}
+        onMouseEnter={hovered(true)}
+        onMouseLeave={hovered(false)}
+        onClick={clicker}
+      >
+        {/* <div className={styles.centeringBox}> */}
+        <div className={`${styles.centeringBox} ${styles.dropdown}`}>
+          <span className={stripeMover(1)}></span>
+          <span className={stripeMover(2)}></span>
+          <span className={stripeMover(3)}></span>
+        </div>
+        <div className={styles.dropdown}>
+          {clicked && <Dropdown className={styles.dropdown} styles={styles} />}
+        </div>
       </div>
-      <nav>{clicked && <Dropdown />}</nav>
     </div>
   );
 };
