@@ -9,10 +9,8 @@ import PieceDetails from './pieceDetails/PieceDetails';
 
 const Library = () => {
   const { allPieces: pieces } = useSelector((state) => state.pieces);
-  const [library, setLibrary] = useState([]);
   const [clickedPiece, setClickedPiece] = useState({});
   const [searchText, setSearchTest] = useState('');
-
 
   const clickedPieceHandler = (pieceId) => setClickedPiece(pieces.find((piece) => piece.id === pieceId));
   

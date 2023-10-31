@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 
+import useApiData from '../../hooks/useApiData';
+
 import Inst from './insts/inst/Inst';
 import Input from '../../UI/input/Input';
 import fetchGet from '../../utils/fetchGet';
@@ -19,6 +21,9 @@ const Subs = () => {
 
   // const [insts, setInsts] = useState([]);
 
+  const subsTest = useApiData(`players/inst_id/${clickedInst?.id}`, clickedInst);
+  if (subsTest.data.length > 0) setSubsOfInst(subsTest.data)
+
   useEffect(() => {
     const getPlayersOfInst = async () => {
       let response = await fetchGet(`players/inst_id/${clickedInst.id}`);
@@ -26,18 +31,12 @@ const Subs = () => {
     };
     if (clickedInst) getPlayersOfInst();
 
-    // setInsts(initialInsts);
 
-  }, [clickedInst, searchText]);
+  }, [clickedInst, searchText, subsTest]);
 
   const clickedInstHandler = (instId) => setClickedInst(insts.find((inst) => inst.id === instId));
 
   const inputHandler = (e) => setSearchTest(e.target.value);
-
-  // let displayableInsts =
-  //   insts.length > 0
-  //     ? insts.map((inst) => <Inst key={inst.id} inst={inst} clicker={clickedInstHandler} isClicked={inst === clickedInst} />)
-  //     : [];
 
   return (
     <div className={styles.outerContainer}>
