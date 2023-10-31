@@ -5,15 +5,32 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const instRoutes = require('./routes/inst-routes');
-const piecesRoutes = require('./routes/piece-routes');
+const listCreator = require('./controllers/create-players-list');
+const instController = require('./controllers/inst-controller');
 
+const instsRoutes = require('./routes/inst-routes');
+const piecesRoutes = require('./routes/piece-routes');
+const playersRoutes = require('./routes/player-routes');
+const gigsRoutes = require('./routes/gig-routes');
+const chairsRoutes = require('./routes/chair-routes');
+const messagesRoutes = require('./routes/message-routes');
+const danielsRoutes = require('./routes/daniels-routes')
+
+// listCreator.createAllFromList();
+// instController.deleteNullPlayerIds();
 
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use("/insts/", instRoutes);
+app.use("/insts/", instsRoutes);
 app.use('/pieces/', piecesRoutes);
+app.use('/players/', playersRoutes);
+app.use('/gigs/', gigsRoutes);
+app.use('/chairs/', chairsRoutes);
+app.use('/messages/', messagesRoutes);
+app.use('/daniels_query/', danielsRoutes)
+
+
 
 app.use('*', (req, res, next) => {
   return next({

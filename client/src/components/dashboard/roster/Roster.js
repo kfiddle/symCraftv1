@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 
 import generalStore from '../../../contextStore/general-store';
-import RosterGenerator from '../../rosterGenerator/RosterGenerator';
+// import RosterGenerator from '../../rosterGenerator/RosterGenerator';
 import RosterLoop from '../../rosterGenerator/rosterUtils/RosterLoop';
 
 import Chair from './chair/Chair';

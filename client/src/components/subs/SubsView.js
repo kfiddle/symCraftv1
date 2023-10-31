@@ -16,23 +16,13 @@ const Subs = () => {
   const { allInsts: insts } = useSelector((state) => state.insts);
 
   const [clickedInst, setClickedInst] = useState(null);
-  const [subsOfInst, setSubsOfInst] = useState([]);
   const [searchText, setSearchTest] = useState('');
-
-  // const [insts, setInsts] = useState([]);
-
-  const subsTest = useApiData(`players/inst_id/${clickedInst?.id}`, clickedInst);
-  if (subsTest.data.length > 0) setSubsOfInst(subsTest.data)
-
+  const subsOfInst = useApiData(`players/inst_id/${clickedInst?.id}`, clickedInst);
+  
   useEffect(() => {
-    const getPlayersOfInst = async () => {
-      let response = await fetchGet(`players/inst_id/${clickedInst.id}`);
-      if (response !== 'failed') setSubsOfInst(response);
-    };
-    if (clickedInst) getPlayersOfInst();
 
 
-  }, [clickedInst, searchText, subsTest]);
+  }, [clickedInst, searchText]);
 
   const clickedInstHandler = (instId) => setClickedInst(insts.find((inst) => inst.id === instId));
 
@@ -43,15 +33,13 @@ const Subs = () => {
       <div className={styles.leftBox}>
         <Input placeholder="Enter Instrument" onChangeHandler={inputHandler} />
         <div className={styles.instsBox}>
-          {/* {displayableInsts} */}
           <Insts insts={insts} searchText={searchText} clicker={clickedInstHandler} clickedInst={clickedInst} />
         </div>
       </div>
 
       <div className={styles.centerBox}>
         <Input placeholder="Enter Player" />
-
-        {clickedInst && <SubsOfInst players={subsOfInst} />}
+        {subsOfInst.data.length > 1 && <SubsOfInst players={subsOfInst.data} />}
       </div>
       <div className={styles.rightBox}></div>
     </div>

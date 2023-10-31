@@ -2,14 +2,13 @@ const Inst = require('../models/inst');
 const HttpError = require('../utils/http-error');
 
 const createInst = async (req, res, next) => {
-  console.log(req.body, 'here safe');
-
   const { name, abbreviation } = req.body;
 
-  // const previousInst = await Inst.findOne({ name } || { abbreviation });
-  // if (previousInst) {
-  //   return next(new HttpError("instrument already exists", 422));
-  // }
+  const previousNameInst = await Inst.findOne({ name });
+  const previousAbbrevInst = await Inst.findOne({ abbreviation });
+  if (previousNameInst || previousAbbrevInst) {
+    return next(new HttpError('instrument already exists', 422));
+  }
 
   try {
     const createdInst = new Inst({ name, abbreviation, players: [] });
@@ -39,10 +38,9 @@ const getInstById = async (req, res, next) => {
 };
 
 const getAllInsts = async (req, res, next) => {
-  let insts;
   try {
-    insts = await Inst.find();
-    res.json({ insts: insts.map((inst) => inst.toObject({ getters: true })) });
+    let insts = await Inst.find();
+    res.json(insts.map((inst) => inst.toObject({ getters: true })));
   } catch (err) {
     return next(new HttpError('could not get all instruments', 404));
   }
@@ -64,4 +62,8 @@ const getPlayersOfInst = async (req, res, next) => {
   });
 };
 
-module.exports = { createInst, getInstById, getAllInsts };
+const deleteNullPlayerIds = async () => {
+  // await Inst.updateMany({}, { $unset: { players: true } });
+};
+
+module.exports = { createInst, getInstById, getAllInsts, deleteNullPlayerIds };

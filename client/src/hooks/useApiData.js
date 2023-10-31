@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import fetchGet from '../utils/fetchGet';
 
-const useApiData = (endpoint, makeCallFlag) => {
+const useApiData = (endpoint, watchVar) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -10,14 +10,14 @@ const useApiData = (endpoint, makeCallFlag) => {
       setLoading(true);
       const response = await fetchGet(endpoint);
       if (response !== 'failed') {
-        console.log(response)
+        console.log(response);
         setData(response);
       }
       setLoading(false);
     };
 
-    if (makeCallFlag) fetchData();
-  }, [makeCallFlag]); // Use dependencies as the dependency array
+    if (watchVar) fetchData();
+  }, [watchVar]);
 
   return { data, loading };
 }

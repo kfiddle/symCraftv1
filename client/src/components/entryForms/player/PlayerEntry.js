@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Modal from '../../../UI/modal/Modal';
 import Input from '../../../UI/input/Input';
 
-import fetchPost from '../../../utils/fetchPost';
+import { createPlayer } from '../../../api/makeEntities';
 
 import styles from './PlayerEntry.module.css';
 import SubmitButton from '../../../UI/submitButton/SubmitButton';
@@ -19,11 +19,9 @@ const PlayerEntry = ({ closeModal }) => {
 
   const submitPlayer = async (e) => {
     e.preventDefault();
-    console.log(playerDeets)
-    const playerToSend = { ...playerDeets, insts: playerInstIds };
-    const response = await fetchPost('players', playerToSend);
-    if (response === 'success') setPlayerDeets({});
-    else if (response === 'failed') console.log('failed to save player data');
+    const playerToSend = { ...playerDeets, insts: playerInstIds, username: playerDeets.email, password: 'EriePhil' };
+    const response = await createPlayer(playerToSend);
+    console.log(response);
   };
 
   const additionalInstInputs = [];
