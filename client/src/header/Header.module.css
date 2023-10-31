@@ -26,7 +26,7 @@ h1 {
   color: #1c1b1c;
   font-weight: 900;
   letter-spacing: 0.15em;
-  margin-left: 3rem;
+  margin-left: 1rem;
 }
 
 .nav ul {
@@ -85,7 +85,7 @@ h1 {
 
 .active {
   text-decoration: none;
-  color: rgb(45, 21, 231);;
+  color: rgb(45, 21, 231);
   transition: 0.3s;
   font-size: 1.5rem;
   letter-spacing: 0.05em;
