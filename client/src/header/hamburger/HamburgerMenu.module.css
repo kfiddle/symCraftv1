@@ -8,19 +8,20 @@
   margin-right: 2rem;
 }
 
-.bar1 {
+.bar5 {
   display: block;
   position: relative;
+  top: -3px;
   width: 4rem;
-  height: 5px;
-  background: #1c1b1c;
+  height: 4px;
+  background: transparent;
   transition: cubic-bezier(0.3, 0, 0.5, 1) 0.15s;
 }
 
-.bar2 {
+.bar4 {
   display: block;
   position: relative;
-  top: 4px;
+  top: -3px;
   width: 4rem;
   height: 5px;
   background: #1c1b1c;
@@ -30,29 +31,66 @@
 .bar3 {
   display: block;
   position: relative;
-  top: 8px;
+  top: 1px;
   width: 4rem;
   height: 5px;
   background: #1c1b1c;
   transition: cubic-bezier(0.3, 0, 0.5, 1) 0.35s;
 }
 
-.hover1 {
-  background: chartreuse;
-  opacity: 0.5;
-  transform: translateY(-6px);
+.bar2 {
+  display: block;
+  position: relative;
+  top: 5px;
+  width: 4rem;
+  height: 5px;
+  background: #1c1b1c;
+  transition: cubic-bezier(0.3, 0, 0.5, 1) 0.25s;
 }
 
-.hover2 {
-  background: rgb(138, 245, 30);
+.bar1 {
+  display: block;
+  position: relative;
+  top: 5px;
+  width: 4rem;
+  height: 4px;
+  background: transparent;
+  transition: cubic-bezier(0.3, 0, 0.5, 1) 0.15s;
+}
+
+.hover5 {
+  height: 3px;
+  background: rgb(0, 0, 0);
   opacity: 0.5;
-  transform: translateY(-3px);
+  transform: translateY(-11px);
+}
+
+.hover4 {
+  height: 3px;
+  background: rgb(0, 0, 0);
+  opacity: 0.5;
+  transform: translateY(-4px);
 }
 
 .hover3 {
-  background: rgb(200, 236, 37);
+  height: 3px;
+  background: rgb(0, 0, 0);
   opacity: 0.5;
-  transform: translateY(1px);
+  /* transform: translateY(1px); */
+}
+
+.hover2 {
+  height: 3px;
+  background: rgb(0, 0, 0);
+  opacity: 0.5;
+  transform: translateY(4px);
+}
+
+.hover1 {
+  height: 3px;
+  background: rgb(0, 0, 0);
+  opacity: 0.5;
+  transform: translateY(11px);
 }
 
 .clickedBar1 {
@@ -65,4 +103,16 @@
 
 .clickedBar3 {
   transform: rotate(-45deg) translateY(-9px);
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 5rem;
+  left: 0;
+  justify-content: left;
+  padding: 10px;
+  background-color: #f3f1f1;
+  box-shadow: 3px 3px 10px #d3d3d3;
 }
