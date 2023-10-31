@@ -13,8 +13,8 @@ const Header = ({ stripesHandler, setSideBarOpen }) => {
       <div className={styles.logoDiv}>
         {/* <HamburgerMenu stripesHandler={stripesHandler} sideBarOpen={props.sideBarOpen} /> */}
         <HamburgerMenu />
-        <NavLink to={'/dashboard'}>
-          <h1 className={styles.inActive}>SymCraft</h1>
+        <NavLink to={'/dashboard'} style={{ textDecoration: 'none' }}>
+          <h1>SymCraft</h1>
         </NavLink>
       </div>
     </header>

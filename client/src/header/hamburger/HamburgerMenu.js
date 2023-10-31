@@ -21,10 +21,14 @@ const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
 
   const clicker = () => {
     // stripesHandler();
-    console.log('Hamburger clicked!');
     console.log('clicked 1', clicked);
     if (clicked === true) setClicked(false);
-    if (clicked === false) setClicked(true);
+    if (clicked === false) {
+      setClicked(true);
+      setTimeout(() => {
+        setClicked(false);
+      }, 5000);
+    }
     console.log('clicked 2', clicked);
   };
 
@@ -38,9 +42,11 @@ const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
       >
         {/* <div className={styles.centeringBox}> */}
         <div className={styles.centeringBox}>
-          <span className={stripeMover(1)}></span>
-          <span className={stripeMover(2)}></span>
+          <span className={stripeMover(5)}></span>
+          <span className={stripeMover(4)}></span>
           <span className={stripeMover(3)}></span>
+          <span className={stripeMover(2)}></span>
+          <span className={stripeMover(1)}></span>
         </div>
         <div>
           {clicked && <Dropdown className={styles.dropdown} styles={styles} />}

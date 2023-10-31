@@ -25,7 +25,7 @@ const DropdownNav = () => {
             isActive ? styles.active : styles.inActive
           }
         >
-          Notics
+          Notices
         </NavLink>
       </nav>
       <nav>
