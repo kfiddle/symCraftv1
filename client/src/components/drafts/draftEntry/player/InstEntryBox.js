@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Hint } from 'react-autocomplete-hint';
 import { useSelector } from 'react-redux';
 
-import Input from '../../../UI/input/Input';
+import Input from '../../../../UI/input/Input';
 
 import styles from './InstEntryBox.module.css';
 

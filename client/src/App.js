@@ -16,6 +16,7 @@ import Library from './components/library/LibraryView';
 import Dashboard from './components/dashboard/Dashboard';
 import Subs from './components/subs/SubsView';
 import Notices from './components/notices/Notices';
+import Drafts from './components/drafts/Drafts';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
     <Layout>
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/drafts" element={<Drafts />} />
           <Route path="/library" element={<Library />} />
           <Route path="/subs" element={<Subs />} />
           <Route path="/notices" element={<Notices />} />

@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
-import Modal from '../../../UI/modal/Modal';
-import Input from '../../../UI/input/Input';
+import Modal from '../../../../UI/modal/Modal';
+import Input from '../../../../UI/input/Input';
 
-import usePostRequest from '../../../hooks/usePostRequest';
-
-import { createPlayer } from '../../../api/makeEntities';
+import usePostRequest from '../../../../hooks/usePostRequest';
 
 import styles from './PlayerEntry.module.css';
-import SubmitButton from '../../../UI/submitButton/SubmitButton';
+import SubmitButton from '../../../../UI/submitButton/SubmitButton';
 import InstEntryBox from './InstEntryBox';
 
 const PlayerEntry = ({ closeModal }) => {
@@ -21,13 +19,7 @@ const PlayerEntry = ({ closeModal }) => {
 
   const { data: success, loading, error, makePostRequest } = usePostRequest('players');
 
-  useEffect(() => {
-    if (error) console.log(error);
-    if (loading) console.log(loading);
-  }, [success, loading, error]);
-
   const submitPlayer = async (e) => {
-    e.preventDefault();
     const playerToSend = { ...playerDeets, insts: playerInstIds, username: playerDeets.email, password: 'EriePhil' };
     makePostRequest(playerToSend);
   };
@@ -41,7 +33,6 @@ const PlayerEntry = ({ closeModal }) => {
   if (error) console.log(error);
 
   return (
-    <Modal closeModal={closeModal}>
       <div className={styles.outerContainer}>
         <h3>New Player</h3>
         <div className={styles.nameInstsDiv}>
@@ -69,7 +60,6 @@ const PlayerEntry = ({ closeModal }) => {
         <Input onChangeHandler={deetsHandler('zip')} />
         <SubmitButton submitFunc={submitPlayer} />
       </div>
-    </Modal>
   );
 };
 

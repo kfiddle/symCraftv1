@@ -1,11 +1,11 @@
 import { Fragment, useState } from 'react';
 
 import styles from './HamburgerMenu.module.css';
-import PlayerEntry from '../../components/entryForms/player/PlayerEntry';
 
 const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
   const [hovering, setHovering] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const [clickedEntry, setClickedEntry] = useState('');
 
   const hovered = (truFalse) => {
     return () => setHovering(truFalse);
@@ -27,7 +27,6 @@ const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
 
   const closeModal = () => setClicked(false);
 
-
   return (
     <Fragment>
       <div className={styles.outerHamburger} onMouseEnter={hovered(true)} onMouseLeave={hovered(false)} onClick={clicker}>
@@ -37,7 +36,7 @@ const HamburgerMenu = ({ stripesHandler, sideBarOpen }) => {
           <span className={stripeMover(3)}></span>
         </div>
       </div>
-      {clicked && <PlayerEntry closeModal={closeModal} />}
+ 
     </Fragment>
   );
 };

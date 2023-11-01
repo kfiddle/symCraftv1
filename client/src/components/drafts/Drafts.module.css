@@ -1,0 +1,29 @@
+.outerContainer {
+  margin-top: 8rem;
+  height: calc(100vh - 8rem);
+  display: grid;
+  grid-template-columns: 0.35fr 0.75fr 2fr;
+}
+
+.leftBox {
+  border: 1px solid black;
+  padding-left: 1rem;
+}
+
+.centerBox {
+  border: 1px solid black;
+}
+
+.rightBox {
+  border: 1px solid black;
+  /* padding: 1rem; */
+}
+
+.instsBox {
+  overflow: auto;
+  max-height: 70vh;
+}
+
+.instsBox::-webkit-scrollbar {
+  display: none;
+}

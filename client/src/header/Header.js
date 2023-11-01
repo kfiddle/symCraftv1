@@ -12,11 +12,22 @@ const Header = ({ stripesHandler, setSideBarOpen }) => {
     <header className={styles.header}>
       <div className={styles.logoDiv}>
         {/* <HamburgerMenu stripesHandler={stripesHandler} sideBarOpen={props.sideBarOpen} /> */}
-        <HamburgerMenu  />
+        <HamburgerMenu />
         <h1>SymCraft</h1>
       </div>
       <nav className={styles.nav}>
         <ul>
+        <li className={styles.navItem}>
+            <NavLink
+              to={'/drafts'}
+              className={({ isActive }) => (isActive ? styles.active : styles.inActive)}
+              // onClick={closeSideBar}
+              // activeClassName={styles.active}
+            >
+              {' '}
+              Drafts
+            </NavLink>
+          </li>
           <li className={styles.navItem}>
             <NavLink
               to={'/'}
