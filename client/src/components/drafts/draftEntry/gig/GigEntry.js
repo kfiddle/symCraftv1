@@ -33,7 +33,7 @@ const GigEntry = () => {
 
   const [gigDetails, setGigDetails] = useState({});
   const [program, setProgram] = useState([]);
-  const [serviceObj, setServiceObj] = useState({});
+  const [services, setServices] = useState([]);
 
   const inputHandler = (key) => (e) => setGigDetails({ ...gigDetails, [key]: e.target.value });
 
@@ -44,15 +44,22 @@ const GigEntry = () => {
   };
 
   const handleServiceDeets = (num, key) => (e) => {
-    const tempObj = serviceObj;
-    tempObj[num] = { ...tempObj[num], [key]: e.target.value };
-    setServiceObj(tempObj);
+    const temp = [...services];
+    let val = e.target.value;
+    if (key === 'type') val = e.target.value === 'r' ? 'rehearsal' : 'concert';
+    temp[num - 1] = { ...temp[num - 1], [key]: val };
+    setServices(temp);
   };
 
   const { data: success, loading, error, makePostRequest } = usePostRequest('gigs');
 
   // const submitGig = async () => makePostRequest(gigDetails);
-  const submitGig = async () => console.log(program);
+  const submitGig = async () => {
+    const gigToSubmit = { ...gigDetails, program: [...program], services: [...services] };
+    makePostRequest(gigToSubmit);
+  };
+
+  if (success) console.log(success)
 
   // services: [{type: 'rehearsal', date: '11/01/2023', startTime: '7:30pm', endTime: '10:00pm'}]
   // serviceObj: { '1': {type: 'rehearsal', date: '11/01/2023', startTime: '7:30pm', endTime: '10:00pm'} }
@@ -67,34 +74,34 @@ const GigEntry = () => {
       <Input placeholder={'piece 5 id'} onChangeHandler={programHandler(5)} />
       <div style={{ borderTop: '2px solid black', marginTop: '1rem' }}></div>
       <div>
-        <input placeholder="type" onChange={handleServiceDeets('1', 'type')} style={{ width: '2rem' }} />
-        <input placeholder="date" onChange={handleServiceDeets('1', 'date')} style={{ width: '7rem' }} />
-        <input placeholder="start" onChange={handleServiceDeets('1', 'startTime')} style={{ width: '5rem' }} />
-        <input placeholder="end" onChange={handleServiceDeets('1', 'endTime')} style={{ width: '5rem' }} />
+        <input placeholder="type" onChange={handleServiceDeets(1, 'type')} style={{ width: '3rem' }} />
+        <input placeholder="date" onChange={handleServiceDeets(1, 'date')} style={{ width: '7rem' }} />
+        <input placeholder="start" onChange={handleServiceDeets(1, 'startTime')} style={{ width: '5rem' }} />
+        <input placeholder="end" onChange={handleServiceDeets(1, 'endTime')} style={{ width: '5rem' }} />
       </div>
       <div>
-        <input placeholder="type" onChange={handleServiceDeets('2', 'type')} style={{ width: '2rem' }} />
-        <input placeholder="date" onChange={handleServiceDeets('2', 'date')} style={{ width: '7rem' }} />
-        <input placeholder="start" onChange={handleServiceDeets('2', 'startTime')} style={{ width: '5rem' }} />
-        <input placeholder="end" onChange={handleServiceDeets('2', 'endTime')} style={{ width: '5rem' }} />
+        <input placeholder="type" onChange={handleServiceDeets(2, 'type')} style={{ width: '3rem' }} />
+        <input placeholder="date" onChange={handleServiceDeets(2, 'date')} style={{ width: '7rem' }} />
+        <input placeholder="start" onChange={handleServiceDeets(2, 'startTime')} style={{ width: '5rem' }} />
+        <input placeholder="end" onChange={handleServiceDeets(2, 'endTime')} style={{ width: '5rem' }} />
       </div>
       <div>
-        <input placeholder="type" onChange={handleServiceDeets('3', 'type')} style={{ width: '3rem' }} />
-        <input placeholder="date" onChange={handleServiceDeets('3', 'date')} style={{ width: '7rem' }} />
-        <input placeholder="start" onChange={handleServiceDeets('3', 'startTime')} style={{ width: '5rem' }} />
-        <input placeholder="end" onChange={handleServiceDeets('3', 'endTime')} style={{ width: '5rem' }} />
+        <input placeholder="type" onChange={handleServiceDeets(3, 'type')} style={{ width: '3rem' }} />
+        <input placeholder="date" onChange={handleServiceDeets(3, 'date')} style={{ width: '7rem' }} />
+        <input placeholder="start" onChange={handleServiceDeets(3, 'startTime')} style={{ width: '5rem' }} />
+        <input placeholder="end" onChange={handleServiceDeets(3, 'endTime')} style={{ width: '5rem' }} />
       </div>
       <div>
-        <input placeholder="type" onChange={handleServiceDeets('4', 'type')} style={{ width: '3rem' }} />
-        <input placeholder="date" onChange={handleServiceDeets('4', 'date')} style={{ width: '7rem' }} />
-        <input placeholder="start" onChange={handleServiceDeets('4', 'startTime')} style={{ width: '5rem' }} />
-        <input placeholder="end" onChange={handleServiceDeets('4', 'endTime')} style={{ width: '5rem' }} />
+        <input placeholder="type" onChange={handleServiceDeets(4, 'type')} style={{ width: '3rem' }} />
+        <input placeholder="date" onChange={handleServiceDeets(4, 'date')} style={{ width: '7rem' }} />
+        <input placeholder="start" onChange={handleServiceDeets(4, 'startTime')} style={{ width: '5rem' }} />
+        <input placeholder="end" onChange={handleServiceDeets(4, 'endTime')} style={{ width: '5rem' }} />
       </div>
       <div>
-        <input placeholder="type" onChange={handleServiceDeets('5', 'type')} style={{ width: '3rem' }} />
-        <input placeholder="date" onChange={handleServiceDeets('5', 'date')} style={{ width: '7rem' }} />
-        <input placeholder="start" onChange={handleServiceDeets('5', 'startTime')} style={{ width: '5rem' }} />
-        <input placeholder="end" onChange={handleServiceDeets('5', 'endTime')} style={{ width: '5rem' }} />
+        <input placeholder="type" onChange={handleServiceDeets(5, 'type')} style={{ width: '3rem' }} />
+        <input placeholder="date" onChange={handleServiceDeets(5, 'date')} style={{ width: '7rem' }} />
+        <input placeholder="start" onChange={handleServiceDeets(5, 'startTime')} style={{ width: '5rem' }} />
+        <input placeholder="end" onChange={handleServiceDeets(5, 'endTime')} style={{ width: '5rem' }} />
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
         <SubmitButton submitFunc={submitGig} />
