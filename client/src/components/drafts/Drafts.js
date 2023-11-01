@@ -16,8 +16,8 @@ const Drafts = () => {
   return (
     <div className={styles.outerContainer}>
       <div className={styles.leftBox}>
-        {Object.values(entryObj).map((entry) => (
-          <h4 onClick={() => setClickedEntry(entry)}>{entry}</h4>
+        {Object.values(entryObj).map((entry, index) => (
+          <h4 key={index} onClick={() => setClickedEntry(entry)}>{entry}</h4>
         ))}
       </div>
       <div className={styles.centerBox}>

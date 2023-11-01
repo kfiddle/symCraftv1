@@ -29,7 +29,6 @@ const PlayerEntry = ({ closeModal }) => {
     additionalInstInputs.push(<InstEntryBox key={j} index={j} setPlayerInstIds={setPlayerInstIds} setNumOfInsts={setNumOfInsts} />);
   }
 
-  if (success) closeModal();
   if (error) console.log(error);
 
   return (

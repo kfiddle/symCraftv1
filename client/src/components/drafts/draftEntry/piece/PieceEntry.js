@@ -20,7 +20,7 @@ const PieceEntry = ({ closeModal }) => {
 
   return (
       <div>
-        <LibraryUploader />
+        {/* <LibraryUploader /> */}
         <Input placeholder={'title'} onChangeHandler={inputHandler('title')} />
         <Input placeholder={'composerLast'} onChangeHandler={inputHandler('composerLast')} />
         <Input placeholder={'composerFirst'} onChangeHandler={inputHandler('composerFirst')} />
@@ -31,6 +31,7 @@ const PieceEntry = ({ closeModal }) => {
         <Input placeholder={'otherName'} onChangeHandler={inputHandler('otherName')} />
         <Input placeholder={'publisher'} onChangeHandler={inputHandler('publisher')} />
         <Input placeholder={'duration'} onChangeHandler={inputHandler('duration')} />
+        <Input placeholder={'instrumentation'} onChangeHandler={inputHandler('instrumentation')} />
         <Input placeholder={'windsBrass'} onChangeHandler={inputHandler('windsBrass')} />
         <Input placeholder={'vocalistSoloist'} onChangeHandler={inputHandler('vocalistSoloist')} />
         <Input placeholder={'percBreakdown'} onChangeHandler={inputHandler('percBreakdown')} />

@@ -57,7 +57,7 @@ const LibraryUploader = () => {
   // };
 
   const sendChunks = async () => {
-    const testPieces = library.slice(0, 100);
+    const testPieces = library.slice(1000);
 
     try {
       const response = await fetch('http://localhost:3000/pieces/array', {
