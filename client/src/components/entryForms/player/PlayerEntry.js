@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from '../../../UI/modal/Modal';
 import Input from '../../../UI/input/Input';
+
+import usePostRequest from '../../../hooks/usePostRequest';
 
 import { createPlayer } from '../../../api/makeEntities';
 
@@ -17,17 +19,26 @@ const PlayerEntry = ({ closeModal }) => {
     setPlayerDeets({ ...playerDeets, [inputType]: e.target.value });
   };
 
+  const { data: success, loading, error, makePostRequest } = usePostRequest('players');
+
+  useEffect(() => {
+    if (error) console.log(error);
+    if (loading) console.log(loading);
+  }, [success, loading, error]);
+
   const submitPlayer = async (e) => {
     e.preventDefault();
     const playerToSend = { ...playerDeets, insts: playerInstIds, username: playerDeets.email, password: 'EriePhil' };
-    const response = await createPlayer(playerToSend);
-    console.log(response);
+    makePostRequest(playerToSend);
   };
 
   const additionalInstInputs = [];
   for (let j = 0; j < numOfInsts; j++) {
     additionalInstInputs.push(<InstEntryBox key={j} index={j} setPlayerInstIds={setPlayerInstIds} setNumOfInsts={setNumOfInsts} />);
   }
+
+  if (success) closeModal();
+  if (error) console.log(error);
 
   return (
     <Modal closeModal={closeModal}>
