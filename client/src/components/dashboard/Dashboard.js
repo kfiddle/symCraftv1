@@ -10,7 +10,6 @@ import { gigsActions } from '../../redux-store/gigs';
 import useGetList from '../../hooks/useGetList';
 
 import styles from './Dashboard.module.css';
-import LibraryUploader from '../library/LibraryUploader';
 
 import Gig from './gig/Gig';
 import Input from '../../UI/input/Input';

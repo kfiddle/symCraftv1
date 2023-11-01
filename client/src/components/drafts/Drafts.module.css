@@ -2,7 +2,7 @@
   margin-top: 8rem;
   height: calc(100vh - 8rem);
   display: grid;
-  grid-template-columns: 0.35fr 0.75fr 2fr;
+  grid-template-columns: 0.25fr 1fr 2fr;
 }
 
 .leftBox {
@@ -19,11 +19,4 @@
   /* padding: 1rem; */
 }
 
-.instsBox {
-  overflow: auto;
-  max-height: 70vh;
-}
 
-.instsBox::-webkit-scrollbar {
-  display: none;
-}

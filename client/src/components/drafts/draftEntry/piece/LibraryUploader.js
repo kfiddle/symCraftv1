@@ -35,7 +35,7 @@ const LibraryUploader = () => {
             publisher: row[8],
             duration: row[9],
             instrumentation: row[10],
-            vocalist_soloists: row[11],
+            vocalistSoloist: row[11],
             percBreakdown: row[12],
             notes: row[13],
             status: row[14],
@@ -57,7 +57,7 @@ const LibraryUploader = () => {
   // };
 
   const sendChunks = async () => {
-    const testPieces = library.slice(1000);
+    const testPieces = library.slice(0, 100);
 
     try {
       const response = await fetch('http://localhost:3000/pieces/array', {
@@ -106,7 +106,7 @@ const LibraryUploader = () => {
     const second = wholeThing.slice(10, 20);
 
     console.log(firstChunk, 'first');
-    console.log(second, 'second')
+    console.log(second, 'second');
   };
 
   return (

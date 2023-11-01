@@ -4,6 +4,7 @@ import usePostRequest from '../../../../hooks/usePostRequest';
 
 import Input from '../../../../UI/input/Input';
 import SubmitButton from '../../../../UI/submitButton/SubmitButton';
+import LibraryUploader from './LibraryUploader';
 
 import styles from './Piece.module.css';
 import Modal from '../../../../UI/modal/Modal';
@@ -19,6 +20,7 @@ const PieceEntry = ({ closeModal }) => {
 
   return (
       <div>
+        <LibraryUploader />
         <Input placeholder={'title'} onChangeHandler={inputHandler('title')} />
         <Input placeholder={'composerLast'} onChangeHandler={inputHandler('composerLast')} />
         <Input placeholder={'composerFirst'} onChangeHandler={inputHandler('composerFirst')} />

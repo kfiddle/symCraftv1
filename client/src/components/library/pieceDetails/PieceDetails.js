@@ -19,7 +19,7 @@ const PieceDetails = ({ piece }) => {
     sign = '',
     updated = '',
     instrumentation = '',
-    vocalist_soloists = '',
+    vocalistSoloist = '',
   } = piece;
 
   const displayName = composerfirst ? `${composerlast}, ${composerfirst}` : composerlast;
@@ -35,11 +35,12 @@ const PieceDetails = ({ piece }) => {
       <div className={styles.arrangerDiv}>{arranger}</div>
       <div className={styles.notesDiv}>{notes}</div>
       <div className={styles.percbreakdownDiv}>{percbreakdown}</div>
-      <div className={styles.vocalist_soloistsDiv}>{vocalist_soloists}</div>
+      <div className={styles.vocalist_soloistsDiv}>{vocalistSoloist}</div>
       <div className={styles.instrumentationDiv}>{instrumentation}</div>
       <div className={styles.updatedDiv}>{updated}</div>
       <div className={styles.statusDiv}>{status}</div>
       <div className={styles.durationDiv}>{duration}</div>
+      <div className={styles.durationDiv}>{sign}</div>
     </Fragment>
   );
 };
