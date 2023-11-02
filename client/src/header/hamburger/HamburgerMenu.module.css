@@ -6,6 +6,8 @@
   align-items: center;
   cursor: pointer;
   margin-right: 2rem;
+  height: 50px;
+  width: 50px;
 }
 
 .bar5 {
