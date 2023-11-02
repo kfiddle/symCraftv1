@@ -53,13 +53,14 @@ const GigEntry = () => {
 
   const { data: success, loading, error, makePostRequest } = usePostRequest('gigs');
 
-  // const submitGig = async () => makePostRequest(gigDetails);
   const submitGig = async () => {
-    const gigToSubmit = { ...gigDetails, program: [...program], services: [...services] };
+    const programToSubmit = program.map((pieceId) => library.find((p) => pieceId === p.id).id);
+    console.log(programToSubmit)
+    const gigToSubmit = { ...gigDetails, program: [...programToSubmit], services: [...services] };
     makePostRequest(gigToSubmit);
   };
 
-  if (success) console.log(success)
+  if (success) console.log(success);
 
   // services: [{type: 'rehearsal', date: '11/01/2023', startTime: '7:30pm', endTime: '10:00pm'}]
   // serviceObj: { '1': {type: 'rehearsal', date: '11/01/2023', startTime: '7:30pm', endTime: '10:00pm'} }
